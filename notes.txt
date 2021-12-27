@@ -1,0 +1,9 @@
+To start a virtualenv, execute the following commands.
+`virtualenv ats`
+`source ats/bin/activate`
+`pip3 install requirements.txt`
+
+To deactivate the virtualenv, save the requirements.
+`pip3 freeze > requirements.txt`
+`deactivate`
+
