@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "@lottiefiles/lottie-player";
 import { Link } from "react-router-dom"
 import axios from "axios";
 
 function Login() {
-
+    const [message, setMessage] = useState(null)
     async function loginUser(e) {
         e.preventDefault();
         var username = (e.target.form[0].value)
@@ -13,10 +13,20 @@ function Login() {
             "email": username,
             "password": passwd
         })
-        .catch(e => console.error(e))
-        .then(async function (data) {
-            window.location.href = "/"
-        })
+            .catch(e => {
+                console.log(e.response)
+                if (e.response.status === 401) {
+                    setMessage("Wrong username or password")
+                }
+                else {
+                    setMessage("Error, try again")
+                }
+            })
+            .then(async function (data) {
+                if (data.status === 200) {
+                    window.location.href = "/"
+                }
+            })
     }
 
     return (
@@ -25,6 +35,7 @@ function Login() {
 
                 <form>
                     <lottie-player src="https://assets4.lottiefiles.com/datafiles/XRVoUu3IX4sGWtiC3MPpFnJvZNq7lVWDCa8LSqgS/profile.json" background="transparent" speed="1" style={{ justifyContent: 'center' }} loop autoplay></lottie-player>
+                    {message != null ? <p className='text-red-600 font-bold mb-5'>{message}</p> : null}
                     <input type="text" placeholder="&#xf007;  username" />
                     <input type="password" id="password" placeholder="&#xf023;  password" />
                     <i className="fas fa-eye" onclick="show()"></i>
@@ -35,7 +46,7 @@ function Login() {
                 </form>
 
                 <form className="login-form">
-                    <Link to='/signup'>
+                    <Link to={{ pathname: '/signup' }}>
                         <button type="button" className='submit-button'>SIGN UP</button>
                     </Link>
                 </form>
