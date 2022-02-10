@@ -6,4 +6,3 @@ To start a virtualenv, execute the following commands.
 To deactivate the virtualenv, save the requirements.
 `pip3 freeze > requirements.txt`
 `deactivate`
-
