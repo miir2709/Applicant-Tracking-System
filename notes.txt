@@ -1,8 +1,12 @@
-To start a virtualenv, execute the following commands.
-`virtualenv ats`
-`source ats/bin/activate`
-`pip3 install requirements.txt`
+To start a python virtualenv, execute the following commands.
+`virtualenv auth`
+`source auth/bin/activate`
+`pip3 install -r requirements.txt`
 
 To deactivate the virtualenv, save the requirements.
 `pip3 freeze > requirements.txt`
 `deactivate`
+
+For Frontend,
+run 'npm i' to install the required packages
+To start application run 'npm start'
