@@ -10,7 +10,15 @@ from django.contrib.auth.models import (
 
 class UserManager(BaseUserManager):
     def create_user(
-        self, phone, first_name, last_name, user_type, username, email, password=None, **kwargs
+        self,
+        phone,
+        first_name,
+        last_name,
+        user_type,
+        username,
+        email,
+        password=None,
+        **kwargs,
     ):
         """Create and return a `User` with an email, phone number, username and password."""
         if username is None:
@@ -21,7 +29,7 @@ class UserManager(BaseUserManager):
         user = self.model(
             username=username,
             phone=phone,
-            user_type = user_type,
+            user_type=user_type,
             first_name=first_name,
             last_name=last_name,
             email=self.normalize_email(email),
@@ -31,7 +39,9 @@ class UserManager(BaseUserManager):
 
         return user
 
-    def create_superuser(self, username, email, password):
+    def create_superuser(
+        self, phone, first_name, last_name, user_type, username, email, password
+    ):
         """
         Create and return a `User` with superuser (admin) permissions.
         """
@@ -42,7 +52,15 @@ class UserManager(BaseUserManager):
         if username is None:
             raise TypeError("Superusers must have an username.")
 
-        user = self.create_user(username, email, password)
+        user = self.create_user(
+            username=username,
+            phone=phone,
+            user_type=user_type,
+            first_name=first_name,
+            last_name=last_name,
+            email=self.normalize_email(email),
+            password=password,
+        )
         user.is_superuser = True
         user.is_staff = True
         user.save(using=self._db)
