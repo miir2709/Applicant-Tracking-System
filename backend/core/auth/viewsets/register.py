@@ -16,7 +16,6 @@ class RegistrationViewSet(ModelViewSet, TokenObtainPairView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
-        print(type(user))
         refresh = RefreshToken.for_user(user)
         res = {
             "refresh": str(refresh),
