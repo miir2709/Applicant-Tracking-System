@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import '@lottiefiles/lottie-player'
-import { Link } from 'react-router-dom'
 import axios from 'axios';
 
 function Signup() {
@@ -27,7 +26,7 @@ function Signup() {
             "user_type": type
         }
 
-        if (passCheck == true && phoneCheck == true && (type == 'Applicant' || type == 'Recruiter')) {
+        if (passCheck === true && phoneCheck === true && (type === 'Applicant' || type === 'Recruiter')) {
             await axios.post('http://127.0.0.1:8000/api/auth/register/', res)
                 .catch(e => {
                     var attr = (Object.keys(e.response.data))
@@ -39,6 +38,7 @@ function Signup() {
                     setMessage(msg)
                 })
                 .then(async function (data) {
+                    console.log(data);
                     if (type(data['username']) === 'string')
                         window.location.href = "/login"
                     else
@@ -48,7 +48,7 @@ function Signup() {
     }
 
     function checkPass(e) {
-        if (e.target.form[4].value == e.target.form[5].value)
+        if (e.target.form[4].value === e.target.form[5].value)
             setPassCheck(true)
         else
             setPassCheck(false)
@@ -56,7 +56,7 @@ function Signup() {
 
     function checkPhone(e) {
         console.log(e.target.value.length)
-        if (e.target.value.length == 10) {
+        if (e.target.value.length === 10) {
             setPhoneCheck(true)
 
         }
@@ -82,11 +82,11 @@ function Signup() {
                     <input type="text" placeholder="Last Name" />
                     <input type="text" placeholder="Username" />
                     <input type="text" placeholder="Email" />
-                    <input type="password" id="password" placeholder="Password" onChange={checkPass} />
+                    <input type="password" id="password" placeholder="Password"/>
                     <input className="mb-0" type="password" id="confirmPassword" placeholder="Confirm Password" onChange={checkPass} />
-                    {passCheck == false ? <p className="text-red-600 text-sm text-left mb-2 -mt-2 ml-2 font-bold">Passwords don't match</p> : null}
+                    {passCheck === false ? <p className="text-red-600 text-sm text-left mb-2 -mt-2 ml-2 font-bold">Passwords don't match</p> : null}
                     <input type="number" placeholder="Phone" onChange={checkPhone} pattern="[0-9]{10}" />
-                    {phoneCheck == false ? <p className="text-red-600 text-sm text-left mb-2 -mt-2 ml-2 font-bold">Length of phone no. must be 10</p> : null}
+                    {phoneCheck === false ? <p className="text-red-600 text-sm text-left mb-2 -mt-2 ml-2 font-bold">Length of phone no. must be 10</p> : null}
                     <select id="user_type" form="signup-form">
                         <option value="Select User Type">Select User Type</option>
                         <option value="Applicant">Applicant</option>
