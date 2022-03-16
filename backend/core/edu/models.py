@@ -1,5 +1,6 @@
 from django.db import models
 from core.user.models import User
+from core.applicant.models import ApplicantDetails
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
@@ -37,7 +38,7 @@ class EducationDetails(models.Model):
 
             return edu_details
 
-    applicant_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    applicant_id = models.ForeignKey(ApplicantDetails, on_delete=models.CASCADE)
     DEGREE_CHOICES = [("B", "Bachelors"), ("M", "Masters"), ("P", "Phd")]
     highest_degree = models.CharField(max_length=2, choices=DEGREE_CHOICES, default="B")
     cgpa = models.DecimalField(max_digits=3, decimal_places=2)

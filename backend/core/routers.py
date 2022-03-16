@@ -3,13 +3,10 @@ from core.user.viewsets import UserViewSet
 from core.auth.viewsets import LoginViewSet, RegistrationViewSet, RefreshViewSet
 from .edu_api.views import EducationViewSet
 from .employment_details_api.views import EmploymentDetailsViewSet
-<<<<<<< HEAD
 from .applicant_api.views import ApplicantViewSet
-=======
 from .recruiter_api.views import RecruiterViewSet
 from .job_posts_api.views import JobPostsViewSet
 
->>>>>>> 26cc4cd922fd32ad45f4639143da070848050d03
 
 routes = SimpleRouter()
 

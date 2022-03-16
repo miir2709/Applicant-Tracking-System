@@ -1,5 +1,6 @@
 from django.db import models
 from core.user.models import User
+from core.applicant.models import ApplicantDetails
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
@@ -33,7 +34,7 @@ class EmploymentDetails(models.Model):
             return employment_details
 
 
-    applicant_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    applicant_id = models.ForeignKey(ApplicantDetails, on_delete=models.CASCADE)
     employer_name = models.CharField(max_length=250)
     employment_period = models.DateField(auto_now=False, auto_now_add=False)
     job_title = models.CharField(max_length=250)

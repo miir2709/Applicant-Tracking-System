@@ -42,13 +42,10 @@ INSTALLED_APPS = [
     "corsheaders",
     "core",
     "core.user",
-    "core.employment_details",
-<<<<<<< HEAD
     "core.applicant",
-=======
+    "core.employment_details",
     "core.recruiter",
     "core.job_posts",
->>>>>>> 26cc4cd922fd32ad45f4639143da070848050d03
 ]
 
 AUTH_USER_MODEL = "core_user.User"
@@ -100,7 +97,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
         "NAME": "SystemDB",
         "USER": "postgres",
-        "PASSWORD": "root",
+        "PASSWORD": "dcba1234",
         "HOST": "localhost",
         "PORT": "5432",
     }
