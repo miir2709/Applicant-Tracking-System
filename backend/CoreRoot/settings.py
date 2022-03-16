@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 from datetime import timedelta
 
@@ -41,7 +42,8 @@ INSTALLED_APPS = [
     "corsheaders",
     "core",
     "core.user",
-    "core.employment_details"
+    "core.employment_details",
+    "core.applicant",
 ]
 
 AUTH_USER_MODEL = "core_user.User"
@@ -70,6 +72,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "django.template.context_processors.media",
             ],
         },
     },
@@ -173,3 +176,6 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
 }
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'resumes/')
+MEDIA_URL = '/media/'
