@@ -6,6 +6,7 @@ from .employment_details_api.views import EmploymentDetailsViewSet
 from .applicant_api.views import ApplicantViewSet
 from .recruiter_api.views import RecruiterViewSet
 from .job_posts_api.views import JobPostsViewSet
+from .applications_api.views import ApplicationsViewSet
 
 
 routes = SimpleRouter()
@@ -23,6 +24,7 @@ routes.register(r"recruiter", RecruiterViewSet, basename="recruiter")
 routes.register(r"job_posts",JobPostsViewSet, basename="job_posts")
 routes.register(r"employment_details", EmploymentDetailsViewSet, basename="employment_details")
 routes.register(r"applicant", ApplicantViewSet, basename="applicant")
+routes.register(r"application", ApplicationsViewSet, basename="application")
 
 
 urlpatterns = [*routes.urls]

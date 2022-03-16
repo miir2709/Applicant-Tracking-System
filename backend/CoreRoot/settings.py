@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "core.employment_details",
     "core.recruiter",
     "core.job_posts",
+    "core.applications",
 ]
 
 AUTH_USER_MODEL = "core_user.User"
