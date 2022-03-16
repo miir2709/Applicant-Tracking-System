@@ -18,10 +18,5 @@ class JobPostsSerializer(serializers.ModelSerializer):
         )
 
     def create(self, validated_data):
-        try:
-            job_posts = JobPosts.objects.get(
-                recruiter_id=validated_data["recruiter_id"]
-            )
-        except ObjectDoesNotExist:
-            job_posts = JobPosts.job_posts_objects.create_job_post(**validated_data)
+        job_posts = JobPosts.job_posts_objects.create_job_post(**validated_data)
         return job_posts
