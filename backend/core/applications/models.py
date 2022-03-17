@@ -30,7 +30,7 @@ class ApplicationsDetails(models.Model):
                 applicant_id=applicant_id,
                 job_id=job_id,
                 similarity_score=similarity_score,
-                application_date_time=similarity_score,
+                application_date_time=application_date_time,
                 application_status=application_status
             )
 
@@ -39,7 +39,7 @@ class ApplicationsDetails(models.Model):
 
     applicant_id = models.ForeignKey(ApplicantDetails, on_delete=models.CASCADE)
     job_id = models.ForeignKey(JobPosts, on_delete=models.CASCADE)
-    cgpa = models.DecimalField(max_digits=10, decimal_places=8)
+    similarity_score = models.DecimalField(max_digits=10, decimal_places=8)
     application_date_time = models.DateTimeField()
     APPLICATION_STATUS_CHOICES = [("S", "selected"), ("R", "in_review"), ("W", "Waitlist")]
     application_status = models.CharField(max_length=2, choices=APPLICATION_STATUS_CHOICES, default="W")
@@ -49,3 +49,5 @@ class ApplicationsDetails(models.Model):
 
     def __str__(self):
         return self.application_objects
+
+

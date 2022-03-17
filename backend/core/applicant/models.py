@@ -26,6 +26,7 @@ class ApplicantDetails(models.Model):
                 preferred_location=preferred_location,
                 job_categories=job_categories,
             )
+            applicant_details.save(using=self._db)
 
             return applicant_details
     
