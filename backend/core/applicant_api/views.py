@@ -7,4 +7,4 @@ from .serializers import ApplicantSerializer
 class ApplicantViewSet(viewsets.ModelViewSet):
     queryset = ApplicantDetails.applicant_objects.all()
     serializer_class = ApplicantSerializer
-    http_method_names = ["get", "post"]
+    http_method_names = ["get", "post", "put","delete"]
