@@ -25,3 +25,18 @@ class ApplicationsSerializer(serializers.ModelSerializer):
                 **validated_data
             )
         return application_details
+
+    def update(self, instance, validated_data):
+        try:
+            instance = ApplicationsDetails.objects.get(
+                applicant_id=validated_data["applicant_id"]
+            )
+            instance.applicant_id = validated_data.get('applicant_id', instance.applicant_id)
+            instance.job_id = validated_data.get('job_id', instance.job_id)
+            instance.similarity_score = validated_data.get('similarity_score', instance.similarity_score)
+            instance.application_date_time = validated_data.get('application_date_time', instance.application_date_time)
+            instance.application_status = validated_data.get('application_status', instance.application_status)
+            instance.save()
+        except:
+            print("wrong update")
+        return instance

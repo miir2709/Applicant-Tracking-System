@@ -7,4 +7,4 @@ from .serializers import EducationSerializer
 class EducationViewSet(viewsets.ModelViewSet):
     queryset = EducationDetails.education_objects.all()
     serializer_class = EducationSerializer
-    http_method_names = ["get", "post"]
+    http_method_names = ["get", "post", "put"]

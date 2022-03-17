@@ -23,3 +23,17 @@ class EmploymentDetailsSerializer(serializers.ModelSerializer):
                 **validated_data
             )
         return employment_details
+    
+    def update(self, instance, validated_data):
+        try:
+            instance = EmploymentDetails.objects.get(
+                applicant_id=validated_data["applicant_id"]
+            )
+            instance.applicant_id = validated_data.get('applicant_id', instance.applicant_id)
+            instance.employer_name = validated_data.get('employer_name', instance.employer_name)
+            instance.employment_period = validated_data.get('employment_period', instance.employment_period)
+            instance.job_title = validated_data.get('job_title', instance.job_title)
+            instance.save()
+        except:
+            print("wrong update")
+        return instance
