@@ -148,7 +148,7 @@ if __name__ == '__main__':
         print(f"SKILLS : {temp_resume['skills']}")
         print()
         skills = temp_resume['skills']
-        tfidf_cos, cv_cos, tfidf_euc, cv_euc, spacy_score = get_similarity(skills, jd_data[1]['skills'], nlp)
+        tfidf_cos, cv_cos, tfidf_euc, cv_euc, spacy_score = get_similarity(skills, jd_data[0]['skills'], nlp)
         print(f"Similarity measure:  \n TF-IDF (COSINE) : {tfidf_cos} \n CV (COSINE) : {cv_cos} \n TFIDF (EUC) : {tfidf_euc} \n CV (EUC) : {cv_euc} \n SPACY: {spacy_score}")
         print()
         c += 1
