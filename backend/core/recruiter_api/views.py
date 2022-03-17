@@ -7,4 +7,4 @@ from .serializers import RecruiterSerializer
 class RecruiterViewSet(viewsets.ModelViewSet):
     queryset = RecruiterDetails.recruiter_objects.all()
     serializer_class = RecruiterSerializer
-    http_method_names = ["get", "post"]
+    http_method_names = ["get", "post", "put", "delete"]

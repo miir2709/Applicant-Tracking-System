@@ -7,4 +7,4 @@ from .serializers import JobPostsSerializer
 class JobPostsViewSet(viewsets.ModelViewSet):
     queryset = JobPosts.job_posts_objects.all()
     serializer_class = JobPostsSerializer
-    http_method_names = ["get", "post"]
+    http_method_names = ["get", "post", "put", "delete"]
