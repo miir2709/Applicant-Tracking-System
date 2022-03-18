@@ -10,3 +10,12 @@ To deactivate the virtualenv, save the requirements.
 For Frontend,
 run 'npm i' to install the required packages
 To start application run 'npm start'
+
+
+{
+    "applicant_id":"1",
+            "job_id":"1",
+            "similarity_score":"6.7",
+            "application_date_time":"2015-10-09T08:08",
+            "application_status":"S"
+}
