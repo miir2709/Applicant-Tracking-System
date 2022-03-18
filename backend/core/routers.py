@@ -5,7 +5,11 @@ from .edu_api.views import EducationViewSet
 from .employment_details_api.views import EmploymentDetailsViewSet
 from .applicant_api.views import ApplicantViewSet
 from .recruiter_api.views import RecruiterViewSet
-from .job_posts_api.views import JobPostsViewSet
+from .job_posts_api.views import (
+    JobPostsViewSet,
+    JobPostsByLocationViewSet,
+    JobPostsByRecruiterViewSet,
+)
 from .applications_api.views import ApplicationsViewSet
 
 
@@ -21,8 +25,20 @@ routes.register(r"user", UserViewSet, basename="user")
 
 routes.register(r"edu", EducationViewSet, basename="edu")
 routes.register(r"recruiter", RecruiterViewSet, basename="recruiter")
-routes.register(r"job_posts",JobPostsViewSet, basename="job_posts")
-routes.register(r"employment_details", EmploymentDetailsViewSet, basename="employment_details")
+routes.register(r"job_posts", JobPostsViewSet, basename="job_posts")
+routes.register(
+    r"job_posts/recruiter",
+    JobPostsByRecruiterViewSet,
+    basename="job_posts_by_recruiter",
+)
+routes.register(
+    r"job_posts/location",
+    JobPostsByLocationViewSet,
+    basename="job_posts_by_location",
+)
+routes.register(
+    r"employment_details", EmploymentDetailsViewSet, basename="employment_details"
+)
 routes.register(r"applicant", ApplicantViewSet, basename="applicant")
 routes.register(r"application", ApplicationsViewSet, basename="application")
 
