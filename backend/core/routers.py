@@ -9,8 +9,9 @@ from .job_posts_api.views import (
     JobPostsViewSet,
     JobPostsByLocationViewSet,
     JobPostsByRecruiterViewSet,
+    JobPostsByCompViewSet,
 )
-from .applications_api.views import ApplicationsViewSet
+from .applications_api.views import ApplicationsViewSet, ApplicationsByJobViewSet
 
 
 routes = SimpleRouter()
@@ -25,7 +26,6 @@ routes.register(r"user", UserViewSet, basename="user")
 
 routes.register(r"edu", EducationViewSet, basename="edu")
 routes.register(r"recruiter", RecruiterViewSet, basename="recruiter")
-routes.register(r"job_posts", JobPostsViewSet, basename="job_posts")
 routes.register(
     r"job_posts/recruiter",
     JobPostsByRecruiterViewSet,
@@ -37,9 +37,18 @@ routes.register(
     basename="job_posts_by_location",
 )
 routes.register(
+    r"job_posts/company",
+    JobPostsByCompViewSet,
+    basename="job_posts_by_company_name",
+)
+routes.register(r"job_posts", JobPostsViewSet, basename="job_posts")
+routes.register(
     r"employment_details", EmploymentDetailsViewSet, basename="employment_details"
 )
 routes.register(r"applicant", ApplicantViewSet, basename="applicant")
+routes.register(
+    r"application/job_id", ApplicationsByJobViewSet, basename="application_by_job"
+)
 routes.register(r"application", ApplicationsViewSet, basename="application")
 
 
