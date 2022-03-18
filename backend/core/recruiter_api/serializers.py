@@ -12,7 +12,7 @@ class RecruiterSerializer(serializers.ModelSerializer):
             "company_name",
             "company_website",
             "company_description",
-            "corporate_address"
+            "corporate_address",
         )
 
     def create(self, validated_data):
@@ -21,7 +21,9 @@ class RecruiterSerializer(serializers.ModelSerializer):
                 recruiter_id=validated_data["recruiter_id"]
             )
         except ObjectDoesNotExist:
-            recruiter_details = RecruiterDetails.recruiter_objects.create_recruiter_details(
-                **validated_data
+            recruiter_details = (
+                RecruiterDetails.recruiter_objects.create_recruiter_details(
+                    **validated_data
+                )
             )
         return recruiter_details
