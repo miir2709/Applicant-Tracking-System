@@ -1,7 +1,13 @@
 To start a python virtualenv, execute the following commands.
+
 `virtualenv auth`
-`source auth/bin/activate`
+`source env/bin/activate` - Linux
+'.\env\Scripts\activate' - Windows
 `pip3 install -r requirements.txt`
+
+To start backend server, execute the following commands.
+
+'python manage.py runserver'
 
 To deactivate the virtualenv, save the requirements.
 `pip3 freeze > requirements.txt`
