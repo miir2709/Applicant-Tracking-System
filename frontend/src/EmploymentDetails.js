@@ -34,10 +34,9 @@ function ApplicantForm(props) {
                 <form>
                     <lottie-player src="https://assets4.lottiefiles.com/datafiles/XRVoUu3IX4sGWtiC3MPpFnJvZNq7lVWDCa8LSqgS/profile.json" background="transparent" speed="1" style={{ justifyContent: 'center' }} loop autoplay></lottie-player>
                     {message != null ? <p className='text-red-600 font-bold mb-5'>{message}</p> : null}
-                    <p className="text-left m-3 ml-1">Upload Resume</p>
-                    <input id="resume" type="file" />
-                    <input type="text" id="preferred_location" placeholder="Preferred Location" />
-                    <input type="text" id="job_categories" placeholder="Job Category" />
+                    <input type="text" id="employer_name" placeholder="Employer Name" />
+                    <input type="text" id="employment_period" placeholder="Job Category" />
+                    <input type="text" id="job_title" placeholder="Job Title" />
                     <input type="submit" value="Submit" className="submit-button" onClick={addApplicantDetails}></input>
                     <p className="message"></p>
                 </form>
