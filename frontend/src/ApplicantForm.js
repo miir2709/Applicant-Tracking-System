@@ -8,15 +8,17 @@ function ApplicantForm(props) {
     async function addApplicantDetails(e) {
         e.preventDefault();
         var applicant_id = 2
-        var resume = e.target.form[0].value
+        var resume = e.target.form[0].files[0]
         var preferred_location = e.target.form[1].value
         var job_categories = e.target.form[2].value
-        await axios.post("http://127.0.0.1:8000/api/applicant/", {
-            "applicant_id": applicant_id,
-            "resume": resume,
-            "preferred_location": preferred_location,
-            "job_categories": job_categories,
-        })
+        const formData = new FormData();
+        formData.append("applicant_id", applicant_id);
+        formData.append("resume", resume);
+        formData.append("preferred_location", preferred_location);
+        formData.append("job_categories", job_categories);
+
+        console.log(formData)
+        await axios.post("http://127.0.0.1:8000/api/applicant/", formData)
             .catch(e => {
                 console.log(e.response)
             })
