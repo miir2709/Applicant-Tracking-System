@@ -9,6 +9,7 @@ import Home from './Home'
 import Login from './Login'
 import Signup from './Signup'
 import ApplicantForm from './ApplicantForm'
+import EmploymentForm from './EmploymentDetails'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path='login' element={<Login />} />
           <Route path='signup' element={<Signup />} />
           <Route path='/applicant' element={<ApplicantForm />} />
+          <Route path='/employment_details' element={<EmploymentForm />} />
         </Routes>
       </div>
     </Router>
