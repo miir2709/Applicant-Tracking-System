@@ -8,6 +8,8 @@ import {
 import Home from './Home'
 import Login from './Login'
 import Signup from './Signup'
+import ApplicantForm from './ApplicantForm'
+
 function App() {
   return (
     <Router>
@@ -16,6 +18,7 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='login' element={<Login />} />
           <Route path='signup' element={<Signup />} />
+          <Route path='/applicant' element={<ApplicantForm />} />
         </Routes>
       </div>
     </Router>

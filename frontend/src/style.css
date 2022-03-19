@@ -12,6 +12,12 @@ body{
   margin: auto;
 
 }
+
+.loginform label{
+  margin-left: 0px;
+  margin-bottom: 30px;
+}
+
 .loginform {
   position: relative;
   z-index: 1;
