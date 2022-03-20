@@ -2,12 +2,17 @@ import React, { useState } from 'react';
 import "@lottiefiles/lottie-player";
 import { Link } from "react-router-dom"
 import axios from "axios";
-
+import { useLocation } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+ 
 function RecruiterDetails(props) {
     const [message, setMessage] = useState(null)
+    const location = useLocation()
+    const navigate = useNavigate()
+    console.log(location.state.user_id)
     async function addRecruiterDetails(e) {
         e.preventDefault();
-        var recruiter_id = 4
+        var recruiter_id = location.state.user_id
         var company_name = e.target.form[0].value
         var company_description = e.target.form[1].value
         var company_website = e.target.form[2].value
@@ -24,7 +29,7 @@ function RecruiterDetails(props) {
                 console.log(e.response)
             })
             .then(async function (data) {
-                if (data.status === 200) {
+                if (data.status === 201) {
                     console.log(data)
                 }
             })

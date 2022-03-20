@@ -11,6 +11,7 @@ import Signup from './Signup'
 import ApplicantForm from './ApplicantForm'
 import EmploymentForm from './EmploymentDetails'
 import EducationDetails from './EducationDetails'
+import RecruiterDetails from './RecruiterDetails'
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path='/applicant' element={<ApplicantForm />} />
           <Route path='/employment_details' element={<EmploymentForm />} />
           <Route path='/edu' element={<EducationDetails />} />
+          <Route path='/recruiter' element={<RecruiterDetails />} />
         </Routes>
       </div>
     </Router>
