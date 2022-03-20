@@ -2,6 +2,8 @@ from rest_framework import serializers
 from core.applicant.models import ApplicantDetails
 from django.core.exceptions import ObjectDoesNotExist
 
+
+
 class ApplicantSerializer(serializers.ModelSerializer):
     class Meta:
         model = ApplicantDetails
@@ -10,7 +12,8 @@ class ApplicantSerializer(serializers.ModelSerializer):
             "applicant_id",
             "resume",
             "preferred_location",
-            "job_categories"
+            "job_categories",
+            "parsed_resume",
         )
     
     def create(self, validated_data):
