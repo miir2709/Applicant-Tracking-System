@@ -2,12 +2,17 @@ import React, { useState } from 'react';
 import "@lottiefiles/lottie-player";
 import { Link } from "react-router-dom"
 import axios from "axios";
+import { useLocation } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 function EducationDetails(props) {
     const [message, setMessage] = useState(null)
+    const location = useLocation()
+    const navigate = useNavigate()
+    console.log(location.state.applicant_id)
     async function addEducationDetails(e) {
         e.preventDefault();
-        var applicant_id = 2
+        var applicant_id = location.state.applicant_id
         var highest_degree = e.target.form[0].value
         var cgpa = e.target.form[1].value
         var graduation_year = e.target.form[2].value
@@ -26,8 +31,8 @@ function EducationDetails(props) {
                 console.log(e.response)
             })
             .then(async function (data) {
-                if (data.status === 200) {
-                    console.log(data)
+                if (data.status === 201) {
+                    navigate('/employment_details', { state: { applicant_id: location.state.applicant_id } })
                 }
             })
     }

@@ -2,12 +2,17 @@ import React, { useState } from 'react';
 import "@lottiefiles/lottie-player";
 import { Link } from "react-router-dom"
 import axios from "axios";
+import { useLocation } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 function ApplicantForm(props) {
     const [message, setMessage] = useState(null)
+    const location = useLocation()
+    const navigate = useNavigate()
+    console.log(location.state.user_id)
     async function addApplicantDetails(e) {
         e.preventDefault();
-        var applicant_id = 2
+        var applicant_id = location.state.user_id
         var resume = e.target.form[0].files[0]
         var preferred_location = e.target.form[1].value
         var job_categories = e.target.form[2].value
@@ -23,8 +28,9 @@ function ApplicantForm(props) {
                 console.log(e.response)
             })
             .then(async function (data) {
-                if (data.status === 200) {
-
+                console.log(data)
+                if (data.status === 201) {
+                    navigate('/edu', { state: { applicant_id: data.data.id } })
                 }
             })
     }

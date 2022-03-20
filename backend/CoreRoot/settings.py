@@ -98,7 +98,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
         "NAME": "SystemDB",
         "USER": "postgres",
-        "PASSWORD": "saurabh",
+        "PASSWORD": "root",
         "HOST": "localhost",
         "PORT": "5432",
     }
@@ -180,5 +180,5 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
 }
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'resumes/')
-MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "resumes/")
+MEDIA_URL = "/media/"

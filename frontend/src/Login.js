@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import "@lottiefiles/lottie-player";
 import { Link } from "react-router-dom"
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
     const [message, setMessage] = useState(null)
+    const navigate = useNavigate();
     async function loginUser(e) {
         e.preventDefault();
         var username = (e.target.form[0].value)
@@ -24,7 +26,6 @@ function Login() {
             })
             .then(async function (data) {
                 if (data.status === 200) {
-                    window.location.href = "/"
                 }
             })
     }

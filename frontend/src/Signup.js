@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import '@lottiefiles/lottie-player'
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
     const [message, setMessage] = useState(null)
     const [passCheck, setPassCheck] = useState(true)
     const [phoneCheck, setPhoneCheck] = useState(true)
-
+    const navigate = useNavigate()
     async function createUser(e) {
         e.preventDefault()
         var fname = (e.target.form[0].value)
@@ -39,8 +40,12 @@ function Signup() {
                 })
                 .then(async function (data) {
                     console.log(data);
-                    if (type(data['username']) === 'string')
-                        window.location.href = "/login"
+                    if (data.status == 201) { 
+                        if (data.data.user.user_type == 'Applicant')
+                            navigate('/applicant', { state: { user_id: data.data.user.id } })
+                        else
+                            navigate('/recruiter', { state: { user_id: data.data.user.id } })
+                    }
                     else
                         console.log(data)
                 })
@@ -82,7 +87,7 @@ function Signup() {
                     <input type="text" placeholder="Last Name" />
                     <input type="text" placeholder="Username" />
                     <input type="text" placeholder="Email" />
-                    <input type="password" id="password" placeholder="Password"/>
+                    <input type="password" id="password" placeholder="Password" />
                     <input className="mb-0" type="password" id="confirmPassword" placeholder="Confirm Password" onChange={checkPass} />
                     {passCheck === false ? <p className="text-red-600 text-sm text-left mb-2 -mt-2 ml-2 font-bold">Passwords don't match</p> : null}
                     <input type="number" placeholder="Phone" onChange={checkPhone} pattern="[0-9]{10}" />

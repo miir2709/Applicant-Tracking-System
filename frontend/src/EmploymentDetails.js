@@ -2,12 +2,17 @@ import React, { useState } from 'react';
 import "@lottiefiles/lottie-player";
 import { Link } from "react-router-dom"
 import axios from "axios";
+import { useLocation } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 function EmploymentForm(props) {
     const [message, setMessage] = useState(null)
+    const location = useLocation()
+    const navigate = useNavigate()
+    console.log(location.state.applicant_id)
     async function addEmploymentDetails(e) {
         e.preventDefault();
-        var applicant_id = 1
+        var applicant_id = location.state.applicant_id
         var employer_name = e.target.form[0].value
         var employment_period = e.target.form[1].value
         var job_title = e.target.form[2].value
@@ -35,7 +40,7 @@ function EmploymentForm(props) {
                     <lottie-player src="https://assets4.lottiefiles.com/datafiles/XRVoUu3IX4sGWtiC3MPpFnJvZNq7lVWDCa8LSqgS/profile.json" background="transparent" speed="1" style={{ justifyContent: 'center' }} loop autoplay></lottie-player>
                     {message != null ? <p className='text-red-600 font-bold mb-5'>{message}</p> : null}
                     <input type="text" id="employer_name" placeholder="Employer Name" />
-                    <input type="date" id="employment_period" placeholder="Employment Period" />
+                    <input type="number" id="employment_period" placeholder="Employment Period" />
                     <input type="text" id="job_title" placeholder="Job Title" />
                     <input type="submit" value="Submit" className="submit-button" onClick={addEmploymentDetails}></input>
                     <p className="message"></p>
