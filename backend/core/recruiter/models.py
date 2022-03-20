@@ -10,18 +10,18 @@ class RecruiterDetails(models.Model):
 
         def create_recruiter_details(
             self,
-            recruiter_id,
+            user_id,
             company_name,
             company_description,
             company_website,
             corporate_address,
             **kwargs
         ):
-            if recruiter_id is None:
+            if user_id is None:
                 raise TypeError("Recruiter details must be associated with a user.")
 
             recruiter_details = self.model(
-                recruiter_id=recruiter_id,
+                user_id=user_id,
                 company_name=company_name,
                 company_description=company_description,
                 company_website=company_website,
@@ -31,7 +31,7 @@ class RecruiterDetails(models.Model):
 
             return recruiter_details
 
-    recruiter_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     company_name = models.CharField(max_length=100)
     company_website = models.URLField(max_length=200, null=True)
     corporate_address = models.TextField(max_length=1000)

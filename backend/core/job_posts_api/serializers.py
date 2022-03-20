@@ -11,6 +11,8 @@ class JobPostsSerializer(serializers.ModelSerializer):
             "recruiter_id",
             "job_title",
             "job_description",
+            "job_category",
+            "parsed_job_description",
             "location",
             "no_of_openings",
             "application_deadline",

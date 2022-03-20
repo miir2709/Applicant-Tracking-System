@@ -7,17 +7,25 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 
+
 class ApplicationsDetails(models.Model):
+    class ApplicationStatus(models.TextChoices):
+        APPLIED = "AP", "Applied"
+        REVIEW = "RE", "Under Review"
+        SCHEDULED = "SC", "Scheduled for Interview"
+        ACCEPTED = "AC", "Accepted"
+        REJECTED = "RJ", "Rejected"
+        PENDING = "PE", "Pending"
+
     class ApplicationsObjects(models.Manager):
         def get_queryset(self):
             return super().get_queryset()
-        
+
         def create_application_details(
-            self, 
+            self,
             applicant_id,
             job_id,
             similarity_score,
-            application_date_time,
             application_status,
             **kwargs
         ):
@@ -25,13 +33,12 @@ class ApplicationsDetails(models.Model):
                 raise TypeError(
                     "Education details must be associated with an applicant."
                 )
-            
+
             application_details = self.model(
                 applicant_id=applicant_id,
                 job_id=job_id,
                 similarity_score=similarity_score,
-                application_date_time=application_date_time,
-                application_status=application_status
+                application_status=application_status,
             )
 
             application_details.save(using=self._db)
@@ -40,14 +47,14 @@ class ApplicationsDetails(models.Model):
     applicant_id = models.ForeignKey(ApplicantDetails, on_delete=models.CASCADE)
     job_id = models.ForeignKey(JobPosts, on_delete=models.CASCADE)
     similarity_score = models.DecimalField(max_digits=10, decimal_places=8)
-    application_date_time = models.DateTimeField()
-    APPLICATION_STATUS_CHOICES = [("S", "selected"), ("R", "in_review"), ("W", "Waitlist")]
-    application_status = models.CharField(max_length=2, choices=APPLICATION_STATUS_CHOICES, default="W")
-
+    application_date_time = models.DateTimeField(auto_now=True)
+    application_status = models.CharField(
+        max_length=2,
+        choices=ApplicationStatus.choices,
+        default=ApplicationStatus.APPLIED,
+    )
     objects = models.Manager()
     application_objects = ApplicationsObjects()
 
     def __str__(self):
         return self.application_objects
-
-

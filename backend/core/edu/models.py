@@ -7,6 +7,11 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class EducationDetails(models.Model):
+    class DegreeChoices(models.TextChoices):
+        BACHELORS = "B", "Bachelors"
+        MASTERS = "M", "MASTERS"
+        PHD = "PHD", "PhD"
+
     class EducationObjects(models.Manager):
         def get_queryset(self):
             return super().get_queryset()
@@ -39,8 +44,9 @@ class EducationDetails(models.Model):
             return edu_details
 
     applicant_id = models.ForeignKey(ApplicantDetails, on_delete=models.CASCADE)
-    DEGREE_CHOICES = [("B", "Bachelors"), ("M", "Masters"), ("P", "Phd")]
-    highest_degree = models.CharField(max_length=2, choices=DEGREE_CHOICES, default="B")
+    highest_degree = models.CharField(
+        max_length=3, choices=DegreeChoices.choices, default=DegreeChoices.BACHELORS
+    )
     cgpa = models.DecimalField(max_digits=3, decimal_places=2)
     graduation_year = models.IntegerField(
         validators=[MaxValueValidator(3000), MinValueValidator(1900)]

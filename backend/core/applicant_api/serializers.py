@@ -9,9 +9,8 @@ class ApplicantSerializer(serializers.ModelSerializer):
         model = ApplicantDetails
         fields = (
             "id",
-            "applicant_id",
+            "user_id",
             "resume",
-            "preferred_location",
             "job_categories",
             "parsed_resume",
         )
@@ -19,7 +18,7 @@ class ApplicantSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         try:
             applicant_details = ApplicantDetails.objects.get(
-                applicant_id=validated_data["applicant_id"]
+                user_id=validated_data["user_id"]
             )
         except ObjectDoesNotExist:
             applicant_details = ApplicantDetails.applicant_objects.create_applicant_details(
@@ -30,11 +29,10 @@ class ApplicantSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         try:
             instance = ApplicantDetails.objects.get(
-                applicant_id=validated_data["applicant_id"]
+                user_id=validated_data["user_id"]
             )
-            instance.applicant_id = validated_data.get('applicant_id', instance.applicant_id)
+            instance.user_id = validated_data.get('user_id', instance.user_id)
             instance.resume = validated_data.get('resume', instance.resume)
-            instance.preferred_location = validated_data.get('preferred_location', instance.preferred_location)
             instance.job_categories = validated_data.get('job_categories', instance.job_categories)
             instance.save()
         except:

@@ -8,7 +8,7 @@ class RecruiterSerializer(serializers.ModelSerializer):
         model = RecruiterDetails
         fields = (
             "id",
-            "recruiter_id",
+            "user_id",
             "company_name",
             "company_website",
             "company_description",
@@ -18,7 +18,7 @@ class RecruiterSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         try:
             recruiter_details = RecruiterDetails.objects.get(
-                recruiter_id=validated_data["recruiter_id"]
+                user_id=validated_data["user_id"]
             )
         except ObjectDoesNotExist:
             recruiter_details = (
