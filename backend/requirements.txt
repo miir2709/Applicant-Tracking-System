@@ -3,3 +3,8 @@ djangorestframework==3.12.4
 djangorestframework-simplejwt==4.7.1
 django-cors-headers==3.7.0
 psycopg2
+docx2txt==0.8
+nltk==3.6.6
+spacy==3.2.1
+pdfminer==20191125
+regex==2021.11.10

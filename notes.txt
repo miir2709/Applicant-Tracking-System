@@ -25,3 +25,7 @@ To start application run 'npm start'
             "application_date_time":"2015-10-09T08:08",
             "application_status":"S"
 }
+
+'To download en_core_web_md'
+
+!python -m spacy download en_core_web_md
