@@ -39,6 +39,32 @@ class ResumeParser():
         return
 
 
+class JobDescriptionParser():
+
+    def __init__(self, jd):
+        self.matcher = Matcher(nlp.vocab)
+        self.details = {'skills' : None}
+        self.text = jd
+        self.nlp = nlp(self.text)
+        self.nouns = list(self.nlp.noun_chunks)
+        self.getDetails()
+
+    def get_extracted_data(self):
+        return self.details
+
+    def getDetails(self):
+        skills = utils.extract_skills(self.nlp, self.nouns)
+        self.details['skills'] = skills
+        return
+
+
+def jd_result_wrapper(jd):
+    parser = JobDescriptionParser(jd)
+    return parser.get_extracted_data()
+
+
+
+
 def resume_result_wrapper(resume):
     parser = ResumeParser(resume)
     return parser.get_extracted_data()

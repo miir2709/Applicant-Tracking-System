@@ -1,7 +1,13 @@
 from django.db import models
 from core.recruiter.models import RecruiterDetails
 from django.core.validators import MaxValueValidator, MinValueValidator
+from core.Resume_Parser.Parser import jd_result_wrapper, process
 
+
+def Parse(job_description):
+    text = jd_result_wrapper(job_description)
+    text = process(text['skills'])
+    return text
 
 class JobPosts(models.Model):
     class JobPostsObjects(models.Manager):
@@ -21,7 +27,8 @@ class JobPosts(models.Model):
         ):
             if recruiter_id is None:
                 raise TypeError("Job Post must be associated with a Recruiter.")
-
+            job_description = Parse(job_description)
+            print(job_description)
             job_post = self.model(
                 recruiter_id=recruiter_id,
                 job_title=job_title,
@@ -37,7 +44,7 @@ class JobPosts(models.Model):
 
     recruiter_id = models.ForeignKey(RecruiterDetails, on_delete=models.CASCADE)
     job_title = models.CharField(max_length=100)
-    job_description = models.TextField(max_length=500)
+    job_description = models.TextField(max_length=5000)
     location = models.CharField(max_length=200)
     no_of_openings = models.IntegerField()
     application_deadline = models.DateField()

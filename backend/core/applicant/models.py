@@ -2,7 +2,6 @@ from django.db import models
 from core.user.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from core.Resume_Parser.Parser import resume_result_wrapper, process
-from django.shortcuts import get_object_or_404
 
 def Parse(filename):
     text = resume_result_wrapper(filename)
