@@ -14,9 +14,7 @@ function Jobs(props) {
     }, [])
 
     function showJob(id) {
-        axios.get('http://127.0.0.1:8000/api/job_posts/' + id).then((data) => {
-            console.log(data['data'])
-        })
+        window.location.href = "/job_post/" + id
     }
 
     return (
