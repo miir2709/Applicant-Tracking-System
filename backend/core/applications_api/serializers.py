@@ -13,6 +13,8 @@ class ApplicationsSerializer(serializers.ModelSerializer):
             "similarity_score",
             "application_date_time",
             "application_status",
+            "resume",
+            "parsed_resume",
         )
 
     def create(self, validated_data):
@@ -43,6 +45,8 @@ class ApplicationsSerializer(serializers.ModelSerializer):
             instance.application_status = validated_data.get(
                 "application_status", instance.application_status
             )
+            instance.resume = validated_data.get('resume', instance.resume)
+            instance.parsed_resume = validated_data.get('parsed_resume', instance.parsed_resume)
             instance.save()
         except:
             print("wrong update")

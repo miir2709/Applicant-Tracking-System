@@ -10,9 +10,7 @@ class ApplicantSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "user_id",
-            "resume",
             "job_categories",
-            "parsed_resume",
         )
     
     def create(self, validated_data):
@@ -32,7 +30,6 @@ class ApplicantSerializer(serializers.ModelSerializer):
                 user_id=validated_data["user_id"]
             )
             instance.user_id = validated_data.get('user_id', instance.user_id)
-            instance.resume = validated_data.get('resume', instance.resume)
             instance.job_categories = validated_data.get('job_categories', instance.job_categories)
             instance.save()
         except:
