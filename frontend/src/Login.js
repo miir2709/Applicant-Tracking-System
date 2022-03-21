@@ -39,7 +39,6 @@ function Login() {
                     {message != null ? <p className='text-red-600 font-bold mb-5'>{message}</p> : null}
                     <input type="text" placeholder="&#xf007;  username" />
                     <input type="password" id="password" placeholder="&#xf023;  password" />
-                    <i className="fas fa-eye" onclick="show()"></i>
                     <br />
                     <br />
                     <input type="submit" value="Login" className="submit-button" onClick={loginUser}></input>

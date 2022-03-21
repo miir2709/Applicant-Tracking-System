@@ -12,10 +12,14 @@ import ApplicantForm from './ApplicantForm'
 import EmploymentForm from './EmploymentDetails'
 import EducationDetails from './EducationDetails'
 import RecruiterDetails from './RecruiterDetails'
+import Navbar from './Navbar'
+import Jobs from './Jobs'
+import JobPost from './JobPost'
 
 function App() {
   return (
     <Router>
+      <Navbar />
       <div className="App">
         <Routes>
           <Route path='/' element={<Home />} />
@@ -25,6 +29,8 @@ function App() {
           <Route path='/employment_details' element={<EmploymentForm />} />
           <Route path='/edu' element={<EducationDetails />} />
           <Route path='/recruiter' element={<RecruiterDetails />} />
+          <Route path="/jobs" element={<Jobs />} />
+          <Route path="/job_post/:id" element={<JobPost />} />
         </Routes>
       </div>
     </Router>

@@ -40,7 +40,7 @@ function Signup() {
                 })
                 .then(async function (data) {
                     console.log(data);
-                    if (data.status == 201) { 
+                    if (data.status == 201) {
                         if (data.data.user.user_type == 'Applicant')
                             navigate('/applicant', { state: { user_id: data.data.user.id } })
                         else
@@ -97,7 +97,6 @@ function Signup() {
                         <option value="Applicant">Applicant</option>
                         <option value="Recruiter">Recruiter</option>
                     </select>
-                    <i class="fas fa-eye" onclick="show()"></i>
                     <br />
                     <br />
                     <input type="submit" value="Signup" className="submit-button" onClick={createUser}></input>

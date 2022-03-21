@@ -18,6 +18,7 @@ class JobPostsSerializer(serializers.ModelSerializer):
             "application_deadline",
             "skills_required",
         )
+        depth = 1
 
     def create(self, validated_data):
         job_posts = JobPosts.job_posts_objects.create_job_post(**validated_data)
