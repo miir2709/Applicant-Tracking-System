@@ -9,7 +9,12 @@ for folder in folders:
         files.remove('__init__.py')
     if "__pycache__" in files:
         files.remove('__pycache__')
-
-    shutil.rmtree(path+'/'+folder+'/__pycache__')
+    try:
+        shutil.rmtree(path+'/'+folder+'/__pycache__')
+    except:
+        pass
     for f in files:
-        os.remove(path+'/'+folder+'/'+f)
+        try:
+            os.remove(path+'/'+folder+'/'+f)
+        except:
+            pass

@@ -1,3 +1,5 @@
+import React from 'react'
+
 function Navbar(props) {
     function Logout() {
         localStorage.removeItem('user_id')
