@@ -41,10 +41,12 @@ function Signup() {
                 .then(async function (data) {
                     console.log(data);
                     if (data.status == 201) {
-                        if (data.data.user.user_type == 'Applicant')
-                            navigate('/applicant', { state: { user_id: data.data.user.id } })
-                        else
-                            navigate('/recruiter', { state: { user_id: data.data.user.id } })
+                        localStorage.setItem('user_type', data.data.user.user_type)
+                        if(localStorage.getItem('user_type') != null)
+                            if (data.data.user.user_type == 'Applicant')
+                                navigate('/applicant', { state: { user_id: data.data.user.id } })
+                            else
+                                navigate('/recruiter', { state: { user_id: data.data.user.id } })
                     }
                     else
                         console.log(data)
@@ -89,8 +91,8 @@ function Signup() {
                     <input type="text" placeholder="Email" />
                     <input type="password" id="password" placeholder="Password" />
                     <input className="mb-0" type="password" id="confirmPassword" placeholder="Confirm Password" onChange={checkPass} />
-                    {passCheck === false ? <p className="text-red-600 text-sm text-left mb-2 -mt-2 ml-2 font-bold">Passwords don't match</p> : null}
-                    <input type="number" placeholder="Phone" onChange={checkPhone} pattern="[0-9]{10}" />
+                    {passCheck === false ? <p className="text-red-600 text-sm text-left mb-2 mt-2 ml-2 font-bold">Passwords don't match</p> : null}
+                    <input className="mt-2 " type="number" placeholder="Phone" onChange={checkPhone} pattern="[0-9]{10}" />
                     {phoneCheck === false ? <p className="text-red-600 text-sm text-left mb-2 -mt-2 ml-2 font-bold">Length of phone no. must be 10</p> : null}
                     <select id="user_type" form="signup-form">
                         <option value="Select User Type">Select User Type</option>

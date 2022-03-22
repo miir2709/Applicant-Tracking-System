@@ -7,15 +7,25 @@ function JobPost(props) {
     const [data, setData] = useState(null)
     const [ready, setReady] = useState(false)
     const [skills, setSkills] = useState(null)
+    const [apps, setApps] = useState(false)
     let params = useParams()
     console.log(params.id)
     useEffect(function () {
-        axios.get("http://127.0.0.1:8000/api/job_posts/" + params.id).then((d) => {
+        axios.get("http://127.0.0.1:8000/api/job_posts/" + params.id).then(async function (d) {
             setData(d['data']);
             setSkills((d['data']['skills_required']).split(','));
             setReady(true)
+            await axios.get("http://127.0.0.1:8000/api/application/user_id/" + localStorage.getItem('user_id')).then((d) => {
+                var d = d.data;
+                console.log(d)
+                for (var i = 0; i < d.length; i++) {
+                    if (d[i]['job_id']['id'] == params.id)
+                        setApps(true)
+                }
+            })
         })
-    }, [])
+    }, []);
+
     return ready ? (
         <div style={{ paddingTop: "80px" }} className="flex flex-row">
             <div className="m-12 basis-3/5 text-left flex flex-col">
@@ -46,7 +56,7 @@ function JobPost(props) {
                     <div className="text-md mt-2">Job Category: {data['job_category']}</div>
                     <div className="text-md mt-2">Location: {data['location']}</div>
                     <div className="text-md mt-2">Vacancy: {data['no_of_openings']}</div>
-                    <button className="px-4 py-2 mt-4 bg-blue-700 text-white rounded-lg hover:bg-blue-900">Apply</button>
+                    {!apps ? <button className="px-4 py-2 mt-4 bg-blue-700 text-white rounded-lg hover:bg-blue-900">Apply</button> : null}
                 </div>
                 <div className="companyInfo text-left mx-12 pt-0">
                     <div className="text-xl font-bold mb-5">Company Information</div>

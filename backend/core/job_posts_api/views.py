@@ -22,7 +22,8 @@ class JobPostsByRecruiterViewSet(viewsets.ModelViewSet):
 
     def retrieve(self, request, *args, **kwargs):
         params = kwargs
-        items = JobPosts.job_posts_objects.filter(recruiter_id=params["pk"])
+        recruiter = get_object_or_404(RecruiterDetails, user_id=params["pk"])
+        items = JobPosts.job_posts_objects.filter(recruiter_id=recruiter.id)
         serializer = self.serializer_class(items, many=True)
         return Response(serializer.data)
 

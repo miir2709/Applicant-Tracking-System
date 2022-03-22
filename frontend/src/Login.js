@@ -26,6 +26,18 @@ function Login() {
             })
             .then(async function (data) {
                 if (data.status === 200) {
+                    console.log(data.data)
+                    localStorage.setItem('user_id', data.data.user.id)
+                    localStorage.setItem('user_type', data.data.user.user_type)
+                    localStorage.setItem('access_token', data.data.access);
+                    localStorage.setItem('refresh_token', data.data.refresh);
+                    while (localStorage.getItem('user_id') == null) {
+
+                    }
+                    if (data.data.user.user_type == "Recruiter")
+                        window.location.href = "/recruiter_dash"
+                    else
+                        window.location.href = "/applicant_dash"
                 }
             })
     }
@@ -33,7 +45,6 @@ function Login() {
     return (
         <div className="login-page" >
             <div className="loginform">
-
                 <form>
                     <lottie-player src="https://assets4.lottiefiles.com/datafiles/XRVoUu3IX4sGWtiC3MPpFnJvZNq7lVWDCa8LSqgS/profile.json" background="transparent" speed="1" style={{ justifyContent: 'center' }} loop autoplay></lottie-player>
                     {message != null ? <p className='text-red-600 font-bold mb-5'>{message}</p> : null}

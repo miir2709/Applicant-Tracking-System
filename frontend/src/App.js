@@ -15,6 +15,9 @@ import RecruiterDetails from './RecruiterDetails'
 import Navbar from './Navbar'
 import Jobs from './Jobs'
 import JobPost from './JobPost'
+import RecruiterDashboard from './RecruiterDashboard'
+import RecruiterJobs from './RecruiterJobs'
+import ApplicantDashboard from './ApplicantDashboard'
 
 function App() {
   return (
@@ -25,12 +28,15 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='login' element={<Login />} />
           <Route path='signup' element={<Signup />} />
-          <Route path='/applicant' element={<ApplicantForm />} />
-          <Route path='/employment_details' element={<EmploymentForm />} />
-          <Route path='/edu' element={<EducationDetails />} />
-          <Route path='/recruiter' element={<RecruiterDetails />} />
-          <Route path="/jobs" element={<Jobs />} />
-          <Route path="/job_post/:id" element={<JobPost />} />
+          <Route path='/applicant' element={localStorage.getItem('user_type') == 'Applicant' && localStorage.getItem('user_id') === null ? < ApplicantForm /> : null} />
+          <Route path='/employment_details' element={localStorage.getItem('user_type') == 'Applicant' && localStorage.getItem('user_id') === null ? <EmploymentForm /> : null} />
+          <Route path='/edu' element={localStorage.getItem('user_type') == 'Applicant' && localStorage.getItem('user_id') === null ? <EducationDetails /> : null} />
+          <Route path='/recruiter' element={localStorage.getItem('user_type') == 'Recruiter' && localStorage.getItem('user_id') == null ? <RecruiterDetails /> : null} />
+          <Route path="/jobs" element={localStorage.getItem('user_type') == 'Applicant' ? <Jobs /> : null} />
+          <Route path="/job_post/:id" element={localStorage.getItem('user_type') == 'Applicant' ? <JobPost /> : null} />
+          <Route path='/recruiter_dash' element={localStorage.getItem('user_type') == 'Recruiter' && localStorage.getItem('user_id') != null ? <RecruiterDashboard /> : null} />
+          <Route path='/recruiter_jobs/:id' element={localStorage.getItem('user_type') == 'Recruiter' && localStorage.getItem('user_id') != null ? <RecruiterJobs /> : null} />
+          <Route path='/applicant_dash' element={localStorage.getItem('user_type') == 'Applicant' && localStorage.getItem('user_id') != null ? <ApplicantDashboard /> : null} />
         </Routes>
       </div>
     </Router>

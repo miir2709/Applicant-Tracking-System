@@ -12,14 +12,12 @@ function ApplicantForm(props) {
     console.log(location.state.user_id)
     async function addApplicantDetails(e) {
         e.preventDefault();
-        var applicant_id = location.state.user_id
+        var user_id = location.state.user_id
         var resume = e.target.form[0].files[0]
-        var preferred_location = e.target.form[1].value
-        var job_categories = e.target.form[2].value
+        var job_categories = e.target.form[1].value
         const formData = new FormData();
-        formData.append("applicant_id", applicant_id);
+        formData.append("user_id", user_id);
         formData.append("resume", resume);
-        formData.append("preferred_location", preferred_location);
         formData.append("job_categories", job_categories);
 
         console.log(formData)
@@ -44,7 +42,6 @@ function ApplicantForm(props) {
                     {message != null ? <p className='text-red-600 font-bold mb-5'>{message}</p> : null}
                     <p className="text-left m-3 ml-1">Upload Resume</p>
                     <input id="resume" type="file" />
-                    <input type="text" id="preferred_location" placeholder="Preferred Location" />
                     <input type="text" id="job_categories" placeholder="Job Category" />
                     <input type="submit" value="Submit" className="submit-button" onClick={addApplicantDetails}></input>
                     <p className="message"></p>

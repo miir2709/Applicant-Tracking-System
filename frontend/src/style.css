@@ -106,13 +106,14 @@ body {
 .nav {
   z-index: 1;
   background-color: #111;
-  width: 100%;
   position: fixed;
   height: 65px;
 }
 
 .nav div.main_list {
   float: left;
+  display: flex;
+  flex-direction: row;
 }
 
 .nav div.main_list ul {

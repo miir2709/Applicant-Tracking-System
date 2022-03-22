@@ -16,6 +16,19 @@ class ApplicationsSerializer(serializers.ModelSerializer):
             "resume",
             "parsed_resume",
         )
+        depth = 2
+
+    def __init__(self, *args, **kwargs):
+        super(ApplicationsSerializer, self).__init__(*args, **kwargs)
+        request = self.context.get("request")
+        if request != None and (
+            request.method == "POST"
+            or request.method == "PUT"
+            or request.method == "DELETE"
+        ):
+            self.Meta.depth = 0
+        else:
+            self.Meta.depth = 2
 
     def create(self, validated_data):
         try:
@@ -45,8 +58,10 @@ class ApplicationsSerializer(serializers.ModelSerializer):
             instance.application_status = validated_data.get(
                 "application_status", instance.application_status
             )
-            instance.resume = validated_data.get('resume', instance.resume)
-            instance.parsed_resume = validated_data.get('parsed_resume', instance.parsed_resume)
+            instance.resume = validated_data.get("resume", instance.resume)
+            instance.parsed_resume = validated_data.get(
+                "parsed_resume", instance.parsed_resume
+            )
             instance.save()
         except:
             print("wrong update")
