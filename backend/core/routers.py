@@ -3,8 +3,8 @@ from core.user.viewsets import UserViewSet
 from core.auth.viewsets import LoginViewSet, RegistrationViewSet, RefreshViewSet
 from .edu_api.views import EducationViewSet
 from .employment_details_api.views import EmploymentDetailsViewSet
-from .applicant_api.views import ApplicantViewSet
-from .recruiter_api.views import RecruiterViewSet
+from .applicant_api.views import ApplicantViewSet, ApplicantByUserViewSet
+from .recruiter_api.views import RecruiterViewSet, RecruiterByUserViewSet
 from .job_posts_api.views import (
     JobPostsViewSet,
     JobPostsByLocationViewSet,
@@ -30,6 +30,7 @@ routes.register(r"user", UserViewSet, basename="user")
 
 routes.register(r"edu", EducationViewSet, basename="edu")
 routes.register(r"recruiter", RecruiterViewSet, basename="recruiter")
+routes.register(r"recruiter/user", RecruiterByUserViewSet, basename="recruiter")
 routes.register(
     r"job_posts/user",
     JobPostsByRecruiterViewSet,
@@ -50,6 +51,7 @@ routes.register(
     r"employment_details", EmploymentDetailsViewSet, basename="employment_details"
 )
 routes.register(r"applicant", ApplicantViewSet, basename="applicant")
+routes.register(r"applicant/user", ApplicantByUserViewSet, basename="applicant_by_user")
 routes.register(
     r"application/job_id", ApplicationsByJobViewSet, basename="application_by_job"
 )

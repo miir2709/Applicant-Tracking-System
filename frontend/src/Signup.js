@@ -41,12 +41,17 @@ function Signup() {
                 .then(async function (data) {
                     console.log(data);
                     if (data.status == 201) {
-                        localStorage.setItem('user_type', data.data.user.user_type)
-                        if(localStorage.getItem('user_type') != null)
-                            if (data.data.user.user_type == 'Applicant')
-                                navigate('/applicant', { state: { user_id: data.data.user.id } })
-                            else
-                                navigate('/recruiter', { state: { user_id: data.data.user.id } })
+                        (async () => await localStorage.setItem('user_type', data.data.user.user_type))();
+                        while (true) {
+                            if (localStorage.getItem('user_type') != null) {
+                                console.log(localStorage.getItem('user_type') == 'Applicant' && localStorage.getItem('user_id') === null)
+                                break;
+                            }
+                        }
+                        if (data.data.user.user_type == 'Applicant')
+                            navigate('/applicant', { state: { user_id: data.data.user.id } })
+                        else
+                            navigate('/recruiter', { state: { user_id: data.data.user.id } })
                     }
                     else
                         console.log(data)

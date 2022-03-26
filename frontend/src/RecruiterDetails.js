@@ -31,6 +31,7 @@ function RecruiterDetails(props) {
             .then(async function (data) {
                 if (data.status === 201) {
                     console.log(data)
+                    window.location.href = "/login"
                 }
             })
     }
