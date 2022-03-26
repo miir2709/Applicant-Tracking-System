@@ -18,18 +18,18 @@ function RecruiterJobPost(props) {
             setReady(true)
         })
         await axios.get("http://127.0.0.1:8000/api/application/job_id/" + params.id).then((d) => {
-            console.log(d['data'])
             let as = d['data']
             var sortable = [];
             for (var a in as) {
-                sortable.push([a, as[a]]);
+                sortable.push(as[a]);
             }
 
             sortable.sort(function (a, b) {
-                return a[1]['similarity_score'] - b[1]['similarity_score'];
+                return b['similarity_score'] - a['similarity_score'];
             });
-
-            setApps(d['data'])
+            console.log(d['data']);
+            console.log(sortable)
+            setApps(sortable)
             setAppReady(true)
         })
     }, [])
