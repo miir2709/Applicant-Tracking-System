@@ -27,7 +27,7 @@ function EmploymentForm(props) {
             })
             .then(async function (data) {
                 if (data.status === 200) {
-
+                    window.location.href = "/login"
                 }
             })
     }

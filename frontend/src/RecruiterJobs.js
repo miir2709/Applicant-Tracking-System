@@ -33,6 +33,17 @@ function RecruiterJobPost(props) {
             setAppReady(true)
         })
     }, [])
+
+    var Job_c = {
+        "EN": "Engineering",
+        "SA": "Sales",
+        "BU": "Business",
+        "ET": "Entertainment",
+        "F": "Food",
+        "O": "Other"
+    }
+
+
     return ready && appReady ? (
         <div style={{ paddingTop: "80px" }}>
             <div className="flex flex-row my-10">
@@ -61,7 +72,7 @@ function RecruiterJobPost(props) {
                 <div className="basis-2/5 flex flex-col">
                     <div className="joboverview text-left m-12 mb-5 p-8 border-2 border-gray-200">
                         <div className="text-xl font-bold">Job Overview</div>
-                        <div className="text-md mt-2">Job Category: {data['job_category']}</div>
+                        <div className="text-md mt-2">Job Category: {Job_c[data['job_category']]}</div>
                         <div className="text-md mt-2">Location: {data['location']}</div>
                         <div className="text-md mt-2">Vacancy: {data['no_of_openings']}</div>
                         <div className="text-md mt-2">Applications Received: {apps.length}</div>

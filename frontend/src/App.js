@@ -29,10 +29,10 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='login' element={localStorage.getItem('user_id') == null ? < Login /> : null} />
           <Route path='signup' element={localStorage.getItem('user_id') == null ? <Signup /> : null} />
-          <Route path='/applicant' element={localStorage.getItem('user_type') == 'Applicant' && localStorage.getItem('user_id') === null ? < ApplicantForm /> : null} />
+          <Route path='/applicant' element={< ApplicantForm />} />
           <Route path='/employment_details' element={localStorage.getItem('user_type') == 'Applicant' && localStorage.getItem('user_id') === null ? <EmploymentForm /> : null} />
           <Route path='/edu' element={localStorage.getItem('user_type') == 'Applicant' && localStorage.getItem('user_id') === null ? <EducationDetails /> : null} />
-          <Route path='/recruiter' element={localStorage.getItem('user_type') == 'Recruiter' && localStorage.getItem('user_id') == null ? <RecruiterDetails /> : null} />
+          <Route path='/recruiter' element={ <RecruiterDetails />} />
           <Route path="/jobs" element={localStorage.getItem('user_type') == 'Applicant' ? <Jobs /> : null} />
           <Route path="/job_post/:id" element={localStorage.getItem('user_type') == 'Applicant' ? <JobPost /> : null} />
           <Route path='/recruiter_dash' element={localStorage.getItem('user_type') == 'Recruiter' && localStorage.getItem('user_id') != null ? <RecruiterDashboard /> : null} />

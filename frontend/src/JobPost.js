@@ -59,6 +59,15 @@ function JobPost(props) {
 
     }
 
+    var Job_c = {
+        "EN": "Engineering",
+        "SA": "Sales",
+        "BU": "Business",
+        "ET": "Entertainment",
+        "F": "Food",
+        "O": "Other"
+    }
+
     return ready ? (
         <div style={{ paddingTop: "80px" }} className="flex flex-row">
             <div id="submit-application-modal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
@@ -114,7 +123,7 @@ function JobPost(props) {
             <div className="basis-2/5 flex flex-col">
                 <div className="joboverview text-left m-12 mb-5 p-8 border-2 border-gray-200">
                     <div className="text-xl font-bold">Job Overview</div>
-                    <div className="text-md mt-2">Job Category: {data['job_category']}</div>
+                    <div className="text-md mt-2">Job Category: {Job_c[data['job_category']]}</div>
                     <div className="text-md mt-2">Location: {data['location']}</div>
                     <div className="text-md mt-2">Vacancy: {data['no_of_openings']}</div>
                     {!apps ? <button className="px-4 py-2 mt-4 bg-blue-700 text-white rounded-lg hover:bg-blue-900" onClick={toggleModal}>Apply</button> : null}

@@ -12,15 +12,23 @@ function ApplicantForm(props) {
     console.log(location.state.user_id)
     async function addApplicantDetails(e) {
         e.preventDefault();
+
+        var Job_c = {
+            "engineering": "EN",
+            "sales": "SA",
+            "business": "BU",
+            "entertainment": "ET",
+            "food": "F",
+            "other": "O"
+        }
+
         var user_id = location.state.user_id
-        var resume = e.target.form[0].files[0]
-        var job_categories = e.target.form[1].value
+        var job_categories = Job_c[e.target.form[0].value]
         const formData = new FormData();
         formData.append("user_id", user_id);
-        formData.append("resume", resume);
         formData.append("job_categories", job_categories);
 
-        console.log(formData)
+        console.log(job_categories);
         await axios.post("http://127.0.0.1:8000/api/applicant/", formData)
             .catch(e => {
                 console.log(e.response)
@@ -32,7 +40,7 @@ function ApplicantForm(props) {
                 }
             })
     }
-
+    var options = ["Engineering", "Sales", "Business", "Entertainment", "Food", "Other"]
     return (
         <div className="login-page" >
             <div className="loginform">
@@ -40,9 +48,15 @@ function ApplicantForm(props) {
                 <form>
                     <lottie-player src="https://assets4.lottiefiles.com/datafiles/XRVoUu3IX4sGWtiC3MPpFnJvZNq7lVWDCa8LSqgS/profile.json" background="transparent" speed="1" style={{ justifyContent: 'center' }} loop autoplay></lottie-player>
                     {message != null ? <p className='text-red-600 font-bold mb-5'>{message}</p> : null}
-                    <p className="text-left m-3 ml-1">Upload Resume</p>
-                    <input id="resume" type="file" />
-                    <input type="text" id="job_categories" placeholder="Job Category" />
+                    <select id="job_categories" placeholder="Job Category" >
+                        {options.map((data, index) => {
+                            return (
+                                <option value={data.toLowerCase()}>
+                                    {data}
+                                </option>
+                            )
+                        })}
+                    </select>
                     <input type="submit" value="Submit" className="submit-button" onClick={addApplicantDetails}></input>
                     <p className="message"></p>
                 </form>
