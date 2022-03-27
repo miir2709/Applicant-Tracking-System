@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react"
 import React from "react"
 import axios from 'axios'
+import { useLocation } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 function ApplicationDashboard() {
+    var navigate = useNavigate()
     const [apps, setApps] = useState([])
     const [ready, setReady] = useState(false)
     useEffect(() => {
@@ -14,7 +17,7 @@ function ApplicationDashboard() {
     }, [])
 
     function showApp(id) {
-        window.location.href = "/application/" + id
+        navigate("/application/" + id)
     }
 
     return (ready ?
@@ -25,7 +28,7 @@ function ApplicationDashboard() {
             {apps.map((data, index) => {
                 return (
                     <div className="flex flex-row text-left rounded-lg border-solid border-2 border-gray-400 mx-12 mb-12 p-4 hover:shadow-lg cursor-pointer" onClick={() => showApp(data['id'])}>
-                        <div className="flex flex-col">
+                        <div className="flex flex-col basis-4/5">
                             <div className="text-3xl hover:text-gray-300">{data['job_id']['job_title']}</div>
                             <div className="flex flex-row mt-3 mr-1">
                                 <div>{data['job_id']['recruiter_id']['company_name']}</div>

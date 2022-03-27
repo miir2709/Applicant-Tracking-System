@@ -31,16 +31,11 @@ class ApplicationsSerializer(serializers.ModelSerializer):
             self.Meta.depth = 2
 
     def create(self, validated_data):
-        try:
-            application_details = ApplicationsDetails.objects.get(
-                applicant_id=validated_data["applicant_id"]
+        application_details = (
+            ApplicationsDetails.application_objects.create_application_details(
+                **validated_data
             )
-        except ObjectDoesNotExist:
-            application_details = (
-                ApplicationsDetails.application_objects.create_application_details(
-                    **validated_data
-                )
-            )
+        )
         return application_details
 
     def update(self, instance, validated_data):

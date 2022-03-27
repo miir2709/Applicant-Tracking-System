@@ -35,6 +35,7 @@ function JobPost(props) {
         await axios.get("http://127.0.0.1:8000/api/applicant/user/" + localStorage.getItem('user_id'))
             .catch((e) => console.log(e))
             .then(async (dt) => {
+                console.log(dt)
                 var applicant_id = dt['data']['id']
                 var job_id = data['id']
                 var similarity_score = 0
@@ -42,7 +43,7 @@ function JobPost(props) {
                 var parsed_resume = ""
                 var resume = e.target.form[0].files[0]
                 const formData = new FormData();
-                console.log(data['id'])
+                console.log(data)
                 formData.append("applicant_id", applicant_id)
                 formData.append("job_id", job_id)
                 formData.append("similarity_score", similarity_score)

@@ -25,7 +25,7 @@ function EmploymentForm(props) {
             .catch(e => {
                 console.log(e.response)
             })
-            .then(async function (data) {
+            .then(function (data) {
                 if (data.status === 200) {
                     window.location.href = "/login"
                 }
