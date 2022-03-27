@@ -11,8 +11,9 @@ from nltk.corpus import stopwords
 # "c:/users/kaush/appdata/local/programs/python/python38/lib/site-packages/en_core_web_md/en_core_web_md-3.2.0"
 # "C:/Users/ayush/Documents/Github/Applicant-Tracking-System/env/Lib/site-packages/en_core_web_md/en_core_web_md-3.2.0"
 nlp = spacy.load(
-    "c:/Users/ayush/Documents/Github/Applicant-Tracking-System/env/Lib/site-packages/en_core_web_md/en_core_web_md-3.2.0"
+    "c:/users/kaush/appdata/local/programs/python/python38/lib/site-packages/en_core_web_md/en_core_web_md-3.2.0"
 )
+
 
 
 class ResumeParser:

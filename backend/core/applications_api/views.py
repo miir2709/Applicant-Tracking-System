@@ -8,7 +8,7 @@ from core.applicant.models import ApplicantDetails
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-
+import numpy as np
 
 def get_similarity_score(parsed_job_description, all_parsed_resumes, ids):
     result = pd.DataFrame(
@@ -33,18 +33,8 @@ def get_similarity_score(parsed_job_description, all_parsed_resumes, ids):
         denselist = dense.tolist()
         sim_ind.append(cosine_similarity([denselist[0]], [denselist[1]])[0][0])
     result["tfidf_ind"] = sim_ind
-    if len(result) > 1:
-        result["tfidf_all"] = (result["tfidf_all"] - result["tfidf_all"].min()) / (
-            result["tfidf_all"].max() - result["tfidf_all"].min()
-        )
-        result["tfidf_ind"] = (result["tfidf_ind"] - result["tfidf_ind"].min()) / (
-            result["tfidf_ind"].max() - result["tfidf_ind"].min()
-        )
-        result["similarity_score"] = (
-            0.5 * result["tfidf_all"] + 0.5 * result["tfidf_ind"]
-        )
-    else:
-        result["similarity_score"] = 1
+    result["similarity_score"] = 1 - (0.5 * result["tfidf_all"] + 0.5 * result["tfidf_ind"])
+    result['similarity_score'] = 1/np.exp(result["similarity_score"])
     return result[["ids", "similarity_score"]]
 
 
