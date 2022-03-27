@@ -92,12 +92,12 @@ function RecruiterJobPost(props) {
                 {apps.map((data, index) => {
                     return (
                         <div className="border-2 border-gray-300 rounded-lg m-10 text-left p-4 flex flex-row">
-                            <div>
+                            <div className="basis-4/5">
                                 <div className="text-3xl">{data['applicant_id']['user_id']['first_name'] + " " + data['applicant_id']['user_id']['last_name']}</div>
                                 <div className="mt-2 text-lg">{"Application Status: " + data['application_status']}</div>
                                 <div className="mt-2 text-lg">{"Applied at: " + data['application_date_time'].substring(0, 10)}</div>
                             </div>
-                            <div className={"text-3xl justify-self-end m-auto mr-0" + (data['similarity_score'] > 50 ? " text-green-700" : " text-red-700")}>
+                            <div className={"text-3xl justify-self-end basis-1/5 m-auto mr-0" + (data['similarity_score'] > 50 ? " text-green-700" : " text-red-700")}>
                                 {data['similarity_score'].toString().substring(0, 5)}
                             </div>
                         </div>
