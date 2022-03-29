@@ -3,7 +3,7 @@
 46706-60869-1-PB.pdf
 ats/
 backend/resumes/
-
+backend/en_core_web_md-2.2.5
 # Created by https://www.toptal.com/developers/gitignore/api/django,python
 # Edit at https://www.toptal.com/developers/gitignore?templates=django,python
 

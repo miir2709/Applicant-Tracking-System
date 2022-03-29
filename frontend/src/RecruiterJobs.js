@@ -2,8 +2,10 @@ import { useState, useEffect } from "react"
 import { useParams } from 'react-router-dom'
 import React from "react"
 import axios from 'axios'
+import { useNavigate } from "react-router-dom";
 
 function RecruiterJobPost(props) {
+    var navigate = useNavigate()
     const [data, setData] = useState(null)
     const [ready, setReady] = useState(false)
     const [skills, setSkills] = useState(null)
@@ -91,7 +93,7 @@ function RecruiterJobPost(props) {
                 <div className="text-4xl mb-10"> Applications </div>
                 {apps.map((data, index) => {
                     return (
-                        <div className="border-2 border-gray-300 rounded-lg m-10 text-left p-4 flex flex-row">
+                        <div className="border-2 border-gray-300 rounded-lg m-10 text-left p-4 flex flex-row hover:cursor-pointer hover:text-gray-300" onClick={() => navigate("/recruiter_app/" + data['id'], { state: { similarity_score: data['similarity_score'].toString().substring(0, 5) } })}>
                             <div className="basis-4/5">
                                 <div className="text-3xl">{data['applicant_id']['user_id']['first_name'] + " " + data['applicant_id']['user_id']['last_name']}</div>
                                 <div className="mt-2 text-lg">{"Application Status: " + data['application_status']}</div>

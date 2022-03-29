@@ -20,9 +20,10 @@ import RecruiterJobs from './RecruiterJobs'
 import ApplicantDashboard from './ApplicantDashboard'
 import JobPostForm from './JobPostForm'
 import Application from './Application'
+import RecruiterApps from './RecruiterApps'
 
 function App() {
-  
+
   return (
     <Router>
       <Navbar />
@@ -42,6 +43,7 @@ function App() {
           <Route path='/applicant_dash' element={localStorage.getItem('user_type') == 'Applicant' && localStorage.getItem('user_id') != null ? <ApplicantDashboard /> : null} />
           <Route path="/application/:id" element={localStorage.getItem('user_type') == "Applicant" && localStorage.getItem('user_id') != null ? <Application /> : null} />
           <Route path="/create_job" element={localStorage.getItem('user_type') == 'Recruiter' && localStorage.getItem('user_id') != null ? <JobPostForm /> : null} />
+          <Route path="/recruiter_app/:id" element={localStorage.getItem('user_type') == 'Recruiter' && localStorage.getItem('user_id') != null ? <RecruiterApps /> : null} />
         </Routes>
       </div>
     </Router>
