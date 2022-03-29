@@ -12,6 +12,14 @@ function JobPostForm(props) {
             <button class="px-3 max-h-12 align-middle rounded-3xl mx-2 bg-blue-500 hover:bg-blue-700" onClick={addSkill}>+</button>
         </div>
     )
+    var Job_c = {
+        "engineering": "EN",
+        "sales": "SA",
+        "business": "BU",
+        "entertainment": "ET",
+        "food": "F",
+        "other": "O"
+    }
     const [message, setMessage] = useState(null)
     const [SkillsInput, setSkillsInput] = useState([skills_input])
     var navigate = useNavigate()
@@ -22,7 +30,7 @@ function JobPostForm(props) {
             var job_title = e.target.form[0].value
             var job_description = e.target.form[1].value
             var parsed_job_description = ""
-            var job_category = e.target.form[2].value
+            var job_category = Job_c[e.target.form[2].value]
             var location = e.target.form[3].value
             var no_of_openings = e.target.form[4].value
             var application_deadline = e.target.form[5].value
@@ -69,6 +77,7 @@ function JobPostForm(props) {
         setSkillsInput(joined)
     }
 
+    var options = ["Engineering", "Sales", "Business", "Entertainment", "Food", "Other"]
 
     return (
         <div className="login-page" >
@@ -78,7 +87,15 @@ function JobPostForm(props) {
                     <lottie-player src="https://assets4.lottiefiles.com/datafiles/XRVoUu3IX4sGWtiC3MPpFnJvZNq7lVWDCa8LSqgS/profile.json" background="transparent" speed="1" style={{ justifyContent: 'center' }} loop autoplay></lottie-player>
                     <input type="text" id="job_title" placeholder="Job Title" />
                     <input type="text" id="job_description" placeholder="Job Description" />
-                    <input type="text" id="job_category" placeholder="Job Category" />
+                    <select id="job_category" placeholder="Job Category" >
+                        {options.map((data, index) => {
+                            return (
+                                <option value={data.toLowerCase()}>
+                                    {data}
+                                </option>
+                            )
+                        })}
+                    </select>
                     <input type="text" id="location" placeholder="Location" />
                     <input type="number" id="no_of_openings" placeholder="No. of openings" />
                     <input type="date" id="application_deadline" placeholder="Application Deadline" />

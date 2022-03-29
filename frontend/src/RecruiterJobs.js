@@ -97,7 +97,7 @@ function RecruiterJobPost(props) {
                                 <div className="mt-2 text-lg">{"Application Status: " + data['application_status']}</div>
                                 <div className="mt-2 text-lg">{"Applied at: " + data['application_date_time'].substring(0, 10)}</div>
                             </div>
-                            <div className={"text-3xl justify-self-end basis-1/5 m-auto mr-0" + (data['similarity_score'] > 50 ? " text-green-700" : " text-red-700")}>
+                            <div className={"text-3xl justify-self-end basis-1/5 m-auto mr-0 text-blue-700"}>
                                 {data['similarity_score'].toString().substring(0, 5)}
                             </div>
                         </div>

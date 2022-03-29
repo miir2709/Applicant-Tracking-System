@@ -26,7 +26,7 @@ function EmploymentForm(props) {
                 console.log(e.response)
             })
             .then(function (data) {
-                if (data.status === 200) {
+                if (data.status === 201) {
                     window.location.href = "/login"
                 }
             })

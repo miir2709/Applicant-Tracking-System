@@ -5,6 +5,8 @@ To start a python virtualenv, execute the following commands.
 '.\env\Scripts\activate' - Windows
 `pip3 install -r requirements.txt`
 
+pip install django djangorestframework djangorestframework-simplejwt django-cors-headers psycopg2 docx2txt nltk spacy pdfminer regex pandas
+
 To start backend server, execute the following commands.
 
 'python manage.py runserver'
@@ -29,3 +31,4 @@ To start application run 'npm start'
 'To download en_core_web_md'
 
 !python -m spacy download en_core_web_md
+
