@@ -102,6 +102,9 @@ function RecruiterJobPost(props) {
                             <div className={"text-3xl justify-self-end basis-1/5 m-auto mr-0 text-blue-700"}>
                                 {data['similarity_score'].toString().substring(0, 5)}
                             </div>
+                            <div className={"text-3xl justify-self-end basis-1/5 m-auto mr-0" + (data['is_recommended'] == "Recommended" ? " text-green-700" : " text-red-700")}>
+                                {data['is_recommended'].toString()}
+                            </div>
                         </div>
                     )
                 })}

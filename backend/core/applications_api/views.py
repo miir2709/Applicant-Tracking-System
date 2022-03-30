@@ -9,11 +9,19 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
+from core.Resume_Parser.lsh import get_forest, predict
 
 def get_similarity_score(parsed_job_description, all_parsed_resumes, ids):
-    result = pd.DataFrame(
-        {"ids": ids, "tfidf_all": [0] * len(ids), "tfidf_ind": [0] * len(ids)}
-    )
+    data = pd.DataFrame({"ids": ids, "Skills": all_parsed_resumes})
+    forest = get_forest(data)
+    if len(ids) == 1:
+        num_reco = 1
+    else:
+        num_reco = len(ids)//2
+    recommendations = predict(parsed_job_description, data, 128, num_reco, forest)
+    result = pd.DataFrame({"ids": ids, "tfidf_all": [0] * len(ids), "tfidf_ind": [0] * len(ids), "is_recommended": [""]*len(ids)})
+    for i in list(recommendations['ids'].values):
+        result.loc[result['ids'] == i, 'is_recommended'] = "Recommended"
     corpus = [parsed_job_description] + all_parsed_resumes
     vectorizer = TfidfVectorizer()
     vectors = vectorizer.fit_transform(corpus)
@@ -35,7 +43,7 @@ def get_similarity_score(parsed_job_description, all_parsed_resumes, ids):
     result["tfidf_ind"] = sim_ind
     result["similarity_score"] = 1 - (0.5 * result["tfidf_all"] + 0.5 * result["tfidf_ind"])
     result['similarity_score'] = 1/np.exp(result["similarity_score"])
-    return result[["ids", "similarity_score"]]
+    return result[["ids", "similarity_score", "is_recommended"]]
 
 
 class ApplicationsViewSet(viewsets.ModelViewSet):
@@ -87,7 +95,6 @@ class ApplicationsByJobViewSet(viewsets.ModelViewSet):
                 score = similarity_scores[similarity_scores["ids"] == curr_id][
                     "similarity_score"
                 ].values[0]
-                print(score)
                 data["similarity_score"] = int(score * 100)
-
+                data['is_recommended'] = similarity_scores[similarity_scores["ids"] == curr_id]['is_recommended'].values[0]
         return Response(serializer.data)
