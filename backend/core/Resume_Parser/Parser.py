@@ -16,8 +16,9 @@ nlp = spacy.load(
 
 
 class ResumeParser:
-    def __init__(self, resume):
+    def __init__(self, resume, all_details):
         self.matcher = Matcher(nlp.vocab)
+        self.all_details = all_details
         self.details = {
             "name": None,
             "email": None,
@@ -36,12 +37,32 @@ class ResumeParser:
         self.getDetails()
 
     def get_extracted_data(self):
-        return self.details["skills"]
+        if self.all_details is False:
+            return self.details["skills"]
+        return self.details
 
     def getDetails(self):
-        skills = utils.extract_skills(self.nlp, self.nouns)
-        self.details["skills"] = skills
-        return
+        if self.all_details is False:
+            skills = utils.extract_skills(self.nlp, self.nouns)
+            self.details["skills"] = skills
+            return
+        else:
+            name = utils.extract_name(self.nlp, matcher=self.matcher)
+            email = utils.extract_email(self.text)
+            mobile = utils.extract_mobile_number(self.text)
+            skills = utils.extract_skills(self.nlp, self.nouns)
+            edu = utils.extract_education([sent.text.strip() for sent in self.nlp.sents])
+            experience = utils.extract_experience(self.text)
+            self.details['name'] = name
+            self.details['email'] = email
+            self.details['mobile_number'] = mobile
+            self.details['skills'] = skills
+            self.details['education'] = edu
+            self.details['experience'] = experience
+            self.details['skills'] = skills
+
+
+            return
 
 
 class JobDescriptionParser:
@@ -67,8 +88,8 @@ def jd_result_wrapper(jd):
     return parser.get_extracted_data()
 
 
-def resume_result_wrapper(resume):
-    parser = ResumeParser(resume)
+def resume_result_wrapper(resume, all_details):
+    parser = ResumeParser(resume, all_details)
     return parser.get_extracted_data()
 
 

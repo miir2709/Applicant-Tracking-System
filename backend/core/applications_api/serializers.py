@@ -15,6 +15,7 @@ class ApplicationsSerializer(serializers.ModelSerializer):
             "application_status",
             "resume",
             "parsed_resume",
+            "annotated_resume_filename",
         )
         depth = 2
 
@@ -56,6 +57,9 @@ class ApplicationsSerializer(serializers.ModelSerializer):
             instance.resume = validated_data.get("resume", instance.resume)
             instance.parsed_resume = validated_data.get(
                 "parsed_resume", instance.parsed_resume
+            )
+            instance.annotated_resume_filename = validated_data.get(
+                "annotated_resume_filename", instance.annotated_resume_filename
             )
             instance.save()
         except:

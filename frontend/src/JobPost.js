@@ -42,6 +42,7 @@ function JobPost(props) {
                 var application_status = "AP"
                 var parsed_resume = ""
                 var resume = e.target.form[0].files[0]
+                var annotated_resume_filename = ""
                 const formData = new FormData();
                 console.log(data)
                 formData.append("applicant_id", applicant_id)
@@ -50,6 +51,7 @@ function JobPost(props) {
                 formData.append("application_status", application_status)
                 formData.append("resume", resume)
                 formData.append("parsed_resume", parsed_resume)
+                formData.append("annotated_resume_filename", annotated_resume_filename)
                 await axios.post("http://127.0.0.1:8000/api/application/", formData)
                     .catch((e) => console.error(e))
                     .then((data) => {
