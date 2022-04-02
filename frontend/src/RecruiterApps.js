@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { useParams } from 'react-router-dom'
 import React from "react"
 import axios from 'axios'
-import { useLocation} from "react-router-dom"
+import { useLocation } from "react-router-dom"
 
 function RecruiterApps() {
     var params = useParams()
@@ -17,16 +17,16 @@ function RecruiterApps() {
             .catch((e) => console.log(e))
             .then(async (data) => {
                 await axios.get("http://127.0.0.1:8000/api/edu/applicant/" + data['data']['applicant_id']['id'])
-                .catch(e => console.log(e))
-                .then((data) => {
-                    setEdu(data['data'])
-                })
+                    .catch(e => console.log(e))
+                    .then((data) => {
+                        setEdu(data['data'])
+                    })
 
                 await axios.get("http://127.0.0.1:8000/api/employment_details/applicant/" + data['data']['applicant_id']['id'])
-                .catch(e => console.log(e))
-                .then((data) => {
-                    setEmp(data['data'])
-                })
+                    .catch(e => console.log(e))
+                    .then((data) => {
+                        setEmp(data['data'])
+                    })
 
                 setApp(data['data'])
                 setReady(true)
@@ -42,9 +42,9 @@ function RecruiterApps() {
     }
 
     var edu_deg = {
-        "B":"Bachelors",
-        "M":"Masters",
-        "P":"PhD"
+        "B": "Bachelors",
+        "M": "Masters",
+        "P": "PhD"
     }
 
     return ready ? (
@@ -61,9 +61,6 @@ function RecruiterApps() {
                         <div className="font-bold">Similarity Score</div>
                         <div className="text-6xl mt-2 text-center text-blue-700">{location.state.similarity_score}</div>
                     </div>
-                    <div className="text-2xl mt-4 font-bold">Job Details</div>
-                    <div className="text-2xl mt-2">{app['job_id']['job_title']}</div>
-                    <div className="text-md mt-2 mx-10 ml-0">{app['job_id']['job_description']}</div>
                 </div>
                 <div className="p-5 bg-gray-300 h-max text-left rounded-2xl">
                     <div className="text-2xl font-bold">Education</div>
@@ -76,8 +73,8 @@ function RecruiterApps() {
                     <div className="mt-2">Tenure: {emp['employment_period']} years</div>
                 </div>
             </div>
-            <div className="my-4 text-3xl font-bold">Resume</div>
-            <embed className="mb-10 m-auto" src={app['resume']} width="60%" height="800"
+            <div className="my-4 text-3xl font-bold">Annotated Resume</div>
+            <embed className="mb-10 m-auto" src={"http://localhost:8000/media/" + app['annotated_resume_filename'].substring(8,app['annotated_resume_filename'].length)} width="60%" height="800"
                 type="application/pdf" />
         </div>
     ) : null;
