@@ -47,6 +47,20 @@ function RecruiterApps() {
         "P": "PhD"
     }
 
+    function toggleResume(){
+        if (document.getElementById('toggle').value === "View Annotated Resume"){
+            document.getElementById('toggle').value = "View Resume"
+            document.getElementById('text').innerHTML = "Annotated Resume"
+            document.getElementById('resumepdf').src = "http://localhost:8000/media/" + app['annotated_resume_filename'].substring(8,app['annotated_resume_filename'].length)
+        }
+        else{
+            document.getElementById('toggle').value = "View Annotated Resume"
+            document.getElementById('resumepdf').src = app['resume']
+            document.getElementById('text').innerHTML = "Resume"
+        }
+    }
+
+
     return ready ? (
         <div style={{ paddingTop: "80px" }} className="pb-50">
             <div className="text-4xl text-left ml-30 font-bold italic mb-20" >Application</div>
@@ -73,9 +87,12 @@ function RecruiterApps() {
                     <div className="mt-2">Tenure: {emp['employment_period']} years</div>
                 </div>
             </div>
-            <div className="my-4 text-3xl font-bold">Annotated Resume</div>
-            <embed className="mb-10 m-auto" src={"http://localhost:8000/media/" + app['annotated_resume_filename'].substring(8,app['annotated_resume_filename'].length)} width="60%" height="800"
-                type="application/pdf" />
+            <div>
+                <input type="button" value="View Annotated Resume" className="my-4 text-3xl font-bold" style={{color: "green", border: "10px;"}} id="toggle" onClick={toggleResume}></input>
+                <div className="my-4 text-3xl font-bold" id="text">Resume</div>
+                <embed id="resumepdf" className="mb-10 m-auto" src={app['resume']} width="60%" height="800"
+                    type="application/pdf" />
+            </div>
         </div>
     ) : null;
 }

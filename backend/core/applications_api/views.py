@@ -20,8 +20,11 @@ def get_similarity_score(parsed_job_description, all_parsed_resumes, ids):
         num_reco = len(ids)//2
     recommendations = predict(parsed_job_description, data, 128, num_reco, forest)
     result = pd.DataFrame({"ids": ids, "tfidf_all": [0] * len(ids), "tfidf_ind": [0] * len(ids), "is_recommended": [""]*len(ids)})
-    for i in list(recommendations['ids'].values):
-        result.loc[result['ids'] == i, 'is_recommended'] = "Recommended"
+    try:
+        for i in list(recommendations['ids'].values):
+            result.loc[result['ids'] == i, 'is_recommended'] = "Recommended"
+    except:
+        pass
     corpus = [parsed_job_description] + all_parsed_resumes
     vectorizer = TfidfVectorizer()
     vectors = vectorizer.fit_transform(corpus)
@@ -96,5 +99,8 @@ class ApplicationsByJobViewSet(viewsets.ModelViewSet):
                     "similarity_score"
                 ].values[0]
                 data["similarity_score"] = int(score * 100)
-                data['is_recommended'] = similarity_scores[similarity_scores["ids"] == curr_id]['is_recommended'].values[0]
+                try:
+                    data['is_recommended'] = similarity_scores[similarity_scores["ids"] == curr_id]['is_recommended'].values[0]
+                except:
+                    pass
         return Response(serializer.data)
