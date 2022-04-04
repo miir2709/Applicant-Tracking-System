@@ -21,6 +21,7 @@ import ApplicantDashboard from './ApplicantDashboard'
 import JobPostForm from './JobPostForm'
 import Application from './Application'
 import RecruiterApps from './RecruiterApps'
+import Profile from './Profile';
 
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
           <Route path="/application/:id" element={localStorage.getItem('user_type') == "Applicant" && localStorage.getItem('user_id') != null ? <Application /> : null} />
           <Route path="/create_job" element={localStorage.getItem('user_type') == 'Recruiter' && localStorage.getItem('user_id') != null ? <JobPostForm /> : null} />
           <Route path="/recruiter_app/:id" element={localStorage.getItem('user_type') == 'Recruiter' && localStorage.getItem('user_id') != null ? <RecruiterApps /> : null} />
+          <Route path="/profile/:id" element={localStorage.getItem('user_id') != null ? <Profile /> : null} />sss
         </Routes>
       </div>
     </Router>
