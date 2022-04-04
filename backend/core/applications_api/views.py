@@ -52,7 +52,11 @@ def get_similarity_score(parsed_job_description, all_parsed_resumes, ids):
 class ApplicationsViewSet(viewsets.ModelViewSet):
     queryset = ApplicationsDetails.application_objects.all()
     serializer_class = ApplicationsSerializer
-    http_method_names = ["get", "post", "put", "delete"]
+    http_method_names = ["get", "post", "put", "delete", "patch"]
+    
+    def update(self, request, *args, **kwargs):
+        kwargs['partial'] = True
+        return super().update(request, *args, **kwargs)
 
 
 class ApplicationsByApplicantViewSet(viewsets.ModelViewSet):
@@ -68,7 +72,6 @@ class ApplicationsByApplicantViewSet(viewsets.ModelViewSet):
         )
         serializer = self.serializer_class(items, many=True)
         return Response(serializer.data)
-
 
 class ApplicationsByJobViewSet(viewsets.ModelViewSet):
     queryset = ApplicationsDetails.application_objects.all()

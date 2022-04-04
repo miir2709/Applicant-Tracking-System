@@ -33,11 +33,18 @@ function Profile() {
                     await axios.post("http://127.0.0.1:8000/api/auth/refresh/", {
                         "refresh": localStorage.getItem("refresh_token")
                     })
-                        .then(async (data) => {
+                    .catch((e) => {
+                        console.log(e)
+                        localStorage.removeItem('user_id')
+                        localStorage.removeItem('user_type')
+                        localStorage.removeItem('access_token')
+                        localStorage.removeItem('refresh_token')
+                        window.location.href = "/login"
+                    })
+                    .then(async (data) => {
                             localStorage.setItem('access_token', data['data']['access'])
-
                         })
-                    return
+                    window.location.reload()
                 }
             })
             .then(async (data) => {

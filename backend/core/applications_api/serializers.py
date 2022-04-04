@@ -26,6 +26,7 @@ class ApplicationsSerializer(serializers.ModelSerializer):
             request.method == "POST"
             or request.method == "PUT"
             or request.method == "DELETE"
+            or request.method == "PATCH"
         ):
             self.Meta.depth = 0
         else:
@@ -39,29 +40,4 @@ class ApplicationsSerializer(serializers.ModelSerializer):
         )
         return application_details
 
-    def update(self, instance, validated_data):
-        try:
-            instance = ApplicationsDetails.objects.get(
-                applicant_id=validated_data["applicant_id"]
-            )
-            instance.applicant_id = validated_data.get(
-                "applicant_id", instance.applicant_id
-            )
-            instance.job_id = validated_data.get("job_id", instance.job_id)
-            instance.similarity_score = validated_data.get(
-                "similarity_score", instance.similarity_score
-            )
-            instance.application_status = validated_data.get(
-                "application_status", instance.application_status
-            )
-            instance.resume = validated_data.get("resume", instance.resume)
-            instance.parsed_resume = validated_data.get(
-                "parsed_resume", instance.parsed_resume
-            )
-            instance.annotated_resume_filename = validated_data.get(
-                "annotated_resume_filename", instance.annotated_resume_filename
-            )
-            instance.save()
-        except:
-            print("wrong update")
-        return instance
+    

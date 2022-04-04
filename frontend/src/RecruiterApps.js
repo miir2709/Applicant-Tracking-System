@@ -60,11 +60,38 @@ function RecruiterApps() {
         }
     }
 
+    async function updateStatus(){
+        var status = document.getElementById('app_status').value
+        const formData = new FormData();
+        formData.append("application_status", status)
+        await axios.put("http://127.0.0.1:8000/api/application/" + app['id'] + "/", formData)
+        .catch((e) => {
+            console.log(e)
+        })
+        .then((data)=> {
+            console.log(data)
+            if(data.status == 200){
+            	window.location.reload();
+            }
+        })
+    }
 
     return ready ? (
         <div style={{ paddingTop: "80px" }} className="pb-50">
             <div className="text-4xl text-left ml-30 font-bold italic mb-20" >Application</div>
-            <div className="text-left mx-10 flex flex-row m-10 mb-5">
+            <div className="ml-0 m-auto flex flex-row">
+                <label for="app_status" className="text-lg mx-5 mt-6">Set Application Status</label>
+                 <select id="app_status" className="p-3 text-lg h-20 max-w-lg" defaultValue={app['application_status']}>
+                    <option value="AP">Applied</option>
+                    <option value="RE">Under Review</option>
+                    <option value="SC">Scheduled for Interview</option>
+                    <option value="AC">Accepted</option>
+                    <option value="RJ">Rejected</option>
+                    <option value="PE">Pendings</option>
+                </select>
+                <button className="ml-3 px-3 h-20 mt-0 rounded-lg bg-blue-600 text-md text-white hover:bg-blue-800" onClick={updateStatus}>Submit</button>
+            </div>
+            <div className="text-left mx-10 flex flex-row m-5">
                 <div className="basis-4/5">
                     <div className="text-xl">Applicant Name: {app['applicant_id']['user_id']['first_name'] + " " + app['applicant_id']['user_id']['last_name']}</div>
                     <div className="text-xl mt-2">Job Category: {Job_c[app['applicant_id']['job_categories']]}</div>
@@ -88,7 +115,7 @@ function RecruiterApps() {
                 </div>
             </div>
             <div>
-                <input type="button" value="View Annotated Resume" className="my-4 text-3xl font-bold" style={{color: "green", border: "10px;"}} id="toggle" onClick={toggleResume}></input>
+                <input type="button" value="View Annotated Resume" className="my-4 text-3xl font-bold text-green-600 hover:underline hover:text-green-800 hover:cursor-pointer" id="toggle" onClick={toggleResume}></input>
                 <div className="my-4 text-3xl font-bold" id="text">Resume</div>
                 <embed id="resumepdf" className="mb-10 m-auto" src={app['resume']} width="60%" height="800"
                     type="application/pdf" />
