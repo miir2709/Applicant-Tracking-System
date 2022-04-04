@@ -9,6 +9,7 @@ def Parse(job_description):
     text = process(text['skills'])
     return text
 
+
 class JobPosts(models.Model):
     class JobCategory(models.TextChoices):
         ENGG = 'EN', "Engineering"
@@ -50,7 +51,6 @@ class JobPosts(models.Model):
                 skills_required=skills_required,
             )
             job_post.save(using=self._db)
-
             return job_post
 
     recruiter_id = models.ForeignKey(RecruiterDetails, on_delete=models.CASCADE)

@@ -1,6 +1,9 @@
+
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import {Helmet} from "react-helmet";
+
 
 function Profile() {
     var navigate = useNavigate()
@@ -83,38 +86,182 @@ function Profile() {
     }
 
     return ready ? (
-        <div style={{ paddingTop: "80px" }}>
-            <div className="mx-5 mt-3 mb-5 text-left">
-                <div className="text-4xl font-bold">{user['first_name']}'s Profile</div>
-                <div className="text-lg mt-2">Username: {user['username']}</div>
-                <div className="text-lg mt-2">Name: {user['first_name'] + " " + user['last_name']}</div>
-                <div className="text-lg mt-2">Email: {user['email']}</div>
-                <div className="text-lg mt-2">Phone: {user['phone']}</div>
-                <div className="text-lg mt-2">User Type: {user['user_type']}</div>
-                {user['user_type'] === 'Recruiter' ?
-                    <div className="recruiter-details">
-                        <div className="text-lg mt-2">Company Name: {userDetails['company_name']}</div>
-                        <div className="text-lg mt-2">Company Website: <a className="text-blue-500 underline hover:text-blue-700" href={userDetails['company_website']}>{userDetails['company_website']}</a></div>
-                        <div className="text-lg mt-2 font-boldssssssssssss">Company Description: </div>
-                        <div className="text-lg mt-1">{userDetails['company_description']}</div>
-                        <div className="text-lg mt-2 font-bold">Corporate Address: </div>
-                        <div className="text-lg mt-2 w-96">{userDetails['corporate_address']}</div>
-                    </div> :
-                    <div className="applicant-details">
-                        <div className="text-lg mt-2">Preferred Job Category: {Job_c[userDetails['job_categories']]}</div>
-                        <div className="text-2xl mt-2 font-bold">Education Details</div>
-                        <div className="text-lg mt-2">University: {eduDetails['university']}</div>
-                        <div className="text-lg mt-2">CGPA: {eduDetails['cgpa']}</div>
-                        <div className="text-lg mt-2">Degree: {Degree[eduDetails['highest_degree']] + " in " + eduDetails['field_of_study']}</div>
-                        <div className="text-lg mt-2">Graduation Year: {eduDetails['graduation_year']}</div>
-                        <div className="text-2xl mt-2 font-bold">Employment Details</div>
-                        <div className="text-lg mt-2">Employer Name: {empDetails['employer_name']}</div>
-                        <div className="text-lg mt-2">Job Title: {empDetails['job_title']}</div>
-                        <div className="text-lg mt-2">Employment Period: {empDetails['employment_period']} years</div>
-                    </div>}
-            </div>
-        </div >
-    ) : null
-}
+        <div className="container emp-profile">
+            <div className='profile-div'>
+                <div className="row">
+                    <div className="col-md-12">
+                        <div className="profile-head">
+                                    <h1>
+                                        {user['first_name']}'s Profile
+                                    </h1>
+                        </div>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-12">
 
-export default Profile;
+                                        <div className="row">
+                                            <div className="col-md-6">
+                                                <label>Username</label>
+                                            </div>
+                                            <div className="col-md-6">
+                                                <p>{user['username']}</p>
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-md-6">
+                                                <label>Name</label>
+                                            </div>
+                                            <div className="col-md-6">
+                                                <p>{user['first_name'] + " " + user['last_name']}</p>
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-md-6">
+                                                <label>Email</label>
+                                            </div>
+                                            <div className="col-md-6">
+                                                <p>{user['email']}</p>
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-md-6">
+                                                <label>Phone</label>
+                                            </div>
+                                            <div className="col-md-6">
+                                                <p>{user['phone']}</p>
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-md-6">
+                                                <label>Account Type</label>
+                                            </div>
+                                            <div className="col-md-6">
+                                                <p>{user['user_type']}</p>
+                                            </div>
+                                        </div>
+                                        {user['user_type'] === 'Recruiter' ?
+                                        <div>
+                                            <div className="row">
+                                                <div className="col-md-12">
+                                                    <label><h1>Company Details</h1></label>
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <label>Company Name</label>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <p>{userDetails['company_name']}</p>
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <label>Company Website</label>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <p><a style={{ color: 'blue' }} classNameName="text-blue-500 underline hover:text-blue-700" href={userDetails['company_website']}>{userDetails['company_website']}</a></p>
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <label>Company Description</label>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <p>{userDetails['company_description']}</p>
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <label>Corporate Address</label>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <p>{userDetails['corporate_address']}</p>
+                                                </div>
+                                            </div>
+                                        </div> :
+                                        <div>
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <label>Preferred Job Category</label>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <p>{Job_c[userDetails['job_categories']]}</p>
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="col-md-12">
+                                                    <label><h1>Education History</h1></label>
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <label>University</label>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <p>{eduDetails['university']}</p>
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <label>CGPA</label>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <p>{eduDetails['cgpa']}</p>
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <label>Degree</label>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <p>{Degree[eduDetails['highest_degree']] + " in " + eduDetails['field_of_study']}</p>
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <label>Graduation Year</label>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <p>{eduDetails['graduation_year']}</p>
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="col-md-12">
+                                                    <label><h1>Employment History</h1></label>
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <label>Employer Name</label>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <p>{empDetails['employer_name']}</p>
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <label>Job Title</label>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <p>{empDetails['job_title']}</p>
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <label>Employment Period</label>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <p>{empDetails['employment_period']} years</p>
+                                                </div>
+                                            </div>
+                                        </div>}
+                            </div>
+                            </div>
+                </div>
+        </div>
+    ) : null
+
+    }
+
+export default Profile
