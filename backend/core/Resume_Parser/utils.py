@@ -113,9 +113,11 @@ def extract_education(nlp_text):
     for index, text in enumerate(nlp_text):
         for tex in text.split():
             tex = re.sub(r'[?|$|.|!|,]', r'', tex)
-            if tex.upper() in cs.EDUCATION and tex not in cs.STOPWORDS:
-                edu[tex] = text + nlp_text[index + 1]
-
+            try:
+                if tex.upper() in cs.EDUCATION and tex not in cs.STOPWORDS:
+                    edu[tex] = text + nlp_text[index + 1]
+            except:
+                edu[tex] = ""
     education = []
     for key in edu.keys():
         year = re.search(re.compile(cs.YEAR), edu[key])

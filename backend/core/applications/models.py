@@ -23,29 +23,34 @@ def Annotate(filename, applicant_id, job_id):
             for page in doc:
                 text = resume_data[key]
                 print(text)
-                if len(text) == 0:
-                    break
-                text_instances = page.search_for(text)
-                print(text_instances)
-                for inst in text_instances:
-                    highlight = page.add_rect_annot(inst)
-                    print(highlight)
-                    highlight.set_colors(colors={'fill': fitz.utils.getColor(color), 'stroke': fitz.utils.getColor(color)})
-                    highlight.update(opacity=0.3)
-                    print(highlight)
-
-        else:
-            for text in resume_data[key]:
-                print(text)
-                for page in doc:
+                try:
                     if len(text) == 0:
                         break
                     text_instances = page.search_for(text)
                     print(text_instances)
                     for inst in text_instances:
                         highlight = page.add_rect_annot(inst)
+                        print(highlight)
                         highlight.set_colors(colors={'fill': fitz.utils.getColor(color), 'stroke': fitz.utils.getColor(color)})
                         highlight.update(opacity=0.3)
+                        print(highlight)
+                except:
+                    pass
+        else:
+            try: 
+                for text in resume_data[key]:
+                    print(text)
+                    for page in doc:
+                        if len(text) == 0:
+                            break
+                        text_instances = page.search_for(text)
+                        print(text_instances)
+                        for inst in text_instances:
+                            highlight = page.add_rect_annot(inst)
+                            highlight.set_colors(colors={'fill': fitz.utils.getColor(color), 'stroke': fitz.utils.getColor(color)})
+                            highlight.update(opacity=0.3)
+            except:
+                pass
     new_filename = f'{filename[:-4] + str(applicant_id) + str(job_id.id)}.pdf'
     doc.save(new_filename, garbage=4, deflate=True, clean=True)
     return new_filename
