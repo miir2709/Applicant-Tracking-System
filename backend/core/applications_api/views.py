@@ -10,6 +10,9 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 from core.Resume_Parser.lsh import get_forest, predict
+from django.http.multipartparser import MultiPartParser
+import smtplib
+
 
 def get_similarity_score(parsed_job_description, all_parsed_resumes, ids):
     data = pd.DataFrame({"ids": ids, "Skills": all_parsed_resumes})
@@ -48,6 +51,46 @@ def get_similarity_score(parsed_job_description, all_parsed_resumes, ids):
     result['similarity_score'] = 1/np.exp(result["similarity_score"])
     return result[["ids", "similarity_score", "is_recommended"]]
 
+def send_emails(job_post):
+    applicants = ApplicantDetails.applicant_objects.all()
+    email_ids = []
+    for app in applicants:
+        if app.user_id.email in ['kaushikmetha7@gmail.com', 'metkaushik10@gmail.com']:
+            email_ids.append(app.user_id.email)
+    print(email_ids)
+    print(job_post.job_title)
+    msg = f"Job Title: {job_post.job_title}\n\nJob Category:  {job_post.job_category} \nLocation:  {job_post.location} \n    Vacancy: {job_post.no_of_openings} \n    Deadline: {job_post.application_deadline}"
+    EMAIL_ADDRESS = "c10lyp.ats@gmail.com"
+    EMAIL_PASSWORD = "lyproject@10ats"
+
+    with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
+        smtp.ehlo()
+        smtp.starttls()
+        smtp.ehlo()
+        smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+        smtp.sendmail(EMAIL_ADDRESS, email_ids, msg)
+
+def send_email(application):
+    APPLIED = "AP", "Applied"
+    REVIEW = "RE", "Under Review"
+    SCHEDULED = "SC", "Scheduled for Interview"
+    ACCEPTED = "AC", "Accepted"
+    REJECTED = "RJ", "Rejected"
+    PENDING = "PE", "Pending"
+    mapping = {"AP": "Applied", "RE": "Under Review", "SC": "Scheduled for Interview", "AC": "Accepted", "RJ": "Rejected", "PE": "Pending"}
+    receiver = [application.applicant_id.user_id.email]
+    application_status = mapping[application.application_status]
+    print(application_status)
+    msg = f"Hello {application.applicant_id.user_id.first_name} \n There has been an update of your application status for the job of {application.job_id.job_title} at {application.job_id.recruiter_id.company_name}. \n Your application status currently is {application_status}"
+    EMAIL_ADDRESS = "c10lyp.ats@gmail.com"
+    EMAIL_PASSWORD = "lyproject@10ats"
+
+    with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
+        smtp.ehlo()
+        smtp.starttls()
+        smtp.ehlo()
+        smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+        smtp.sendmail(EMAIL_ADDRESS, receiver, msg)
 
 class ApplicationsViewSet(viewsets.ModelViewSet):
     queryset = ApplicationsDetails.application_objects.all()
@@ -56,8 +99,10 @@ class ApplicationsViewSet(viewsets.ModelViewSet):
     
     def update(self, request, *args, **kwargs):
         kwargs['partial'] = True
-        return super().update(request, *args, **kwargs)
-
+        obj =  super().update(request, *args, **kwargs)
+        application = get_object_or_404(ApplicationsDetails, id=kwargs["pk"])
+        send_email(application)
+        return obj
 
 class ApplicationsByApplicantViewSet(viewsets.ModelViewSet):
     queryset = ApplicationsDetails.application_objects.all()
