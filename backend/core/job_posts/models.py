@@ -2,6 +2,27 @@ from django.db import models
 from core.recruiter.models import RecruiterDetails
 from django.core.validators import MaxValueValidator, MinValueValidator
 from core.Resume_Parser.Parser import jd_result_wrapper, process
+from core.applicant.models import ApplicantDetails
+import smtplib
+
+def send_emails(job_post):
+    applicants = ApplicantDetails.applicant_objects.all()
+    email_ids = []
+    for app in applicants:
+        if app.user_id.email in ['kaushikmetha7@gmail.com', 'metkaushik10@gmail.com']:
+            email_ids.append(app.user_id.email)
+    print(email_ids)
+    print(job_post.job_title)
+    msg = f"Job Title: {job_post.job_title}\n\nJob Category:  {job_post.job_category} \nLocation:  {job_post.location} \n    Vacancy: {job_post.no_of_openings} \n    Deadline: {job_post.application_deadline}"
+    EMAIL_ADDRESS = "c10lyp.ats@gmail.com"
+    EMAIL_PASSWORD = "lyproject@10ats"
+
+    with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
+        smtp.ehlo()
+        smtp.starttls()
+        smtp.ehlo()
+        smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+        smtp.sendmail(EMAIL_ADDRESS, email_ids, msg)
 
 
 def Parse(job_description):
@@ -38,7 +59,6 @@ class JobPosts(models.Model):
             if recruiter_id is None:
                 raise TypeError("Job Post must be associated with a Recruiter.")
             parsed_job_description = Parse(job_description)
-            print(parsed_job_description)
             job_post = self.model(
                 recruiter_id=recruiter_id,
                 job_title=job_title,
@@ -50,7 +70,9 @@ class JobPosts(models.Model):
                 application_deadline=application_deadline,
                 skills_required=skills_required,
             )
+            send_emails(job_post)
             job_post.save(using=self._db)
+
             return job_post
 
     recruiter_id = models.ForeignKey(RecruiterDetails, on_delete=models.CASCADE)

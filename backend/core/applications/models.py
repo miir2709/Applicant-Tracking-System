@@ -22,29 +22,29 @@ def Annotate(filename, applicant_id, job_id):
         if key in ['email', 'mobile_number', 'name']:
             for page in doc:
                 text = resume_data[key]
-                print(text)
+                #print(text)
                 try:
                     if len(text) == 0:
                         break
                     text_instances = page.search_for(text)
-                    print(text_instances)
+                    #print(text_instances)
                     for inst in text_instances:
                         highlight = page.add_rect_annot(inst)
-                        print(highlight)
+                        #print(highlight)
                         highlight.set_colors(colors={'fill': fitz.utils.getColor(color), 'stroke': fitz.utils.getColor(color)})
                         highlight.update(opacity=0.3)
-                        print(highlight)
+                        #print(highlight)
                 except:
                     pass
         else:
             try: 
                 for text in resume_data[key]:
-                    print(text)
+                    #print(text)
                     for page in doc:
                         if len(text) == 0:
                             break
                         text_instances = page.search_for(text)
-                        print(text_instances)
+                        #print(text_instances)
                         for inst in text_instances:
                             highlight = page.add_rect_annot(inst)
                             highlight.set_colors(colors={'fill': fitz.utils.getColor(color), 'stroke': fitz.utils.getColor(color)})
