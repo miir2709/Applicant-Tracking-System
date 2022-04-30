@@ -4,25 +4,65 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from core.Resume_Parser.Parser import jd_result_wrapper, process
 from core.applicant.models import ApplicantDetails
 import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
 
 def send_emails(job_post):
     applicants = ApplicantDetails.applicant_objects.all()
     email_ids = []
+    names = []
     for app in applicants:
         if app.user_id.email in ['kaushikmetha7@gmail.com', 'metkaushik10@gmail.com']:
             email_ids.append(app.user_id.email)
-    print(email_ids)
-    print(job_post.job_title)
-    msg = f"Job Title: {job_post.job_title}\n\nJob Category:  {job_post.job_category} \nLocation:  {job_post.location} \n    Vacancy: {job_post.no_of_openings} \n    Deadline: {job_post.application_deadline}"
+            names.append(app.user_id.first_name)
     EMAIL_ADDRESS = "c10lyp.ats@gmail.com"
     EMAIL_PASSWORD = "lyproject@10ats"
+    SUBJECT = f"{job_post.job_title} at {job_post.recruiter_id.company_name}".upper()
+    for name, RECEIVER in zip(names, email_ids):
+ #       msg = f"Job Title: {job_post.job_title}\n\nJob Category:  {job_post.job_category} \nLocation:  {job_post.location} \n    Vacancy: {job_post.no_of_openings} \n    Deadline: {job_post.application_deadline}"
+        BODY = f"""
+        <div style="box-sizing:border-box;min-width:640px;width:100%;">
+            <div style="width:640px;margin:auto;border:1px solid #dddddd;border-radius:8px;">
+                <div style="height:118px;box-sizing:border-box;padding-top:16px;text-align:center;">
+                    <img alt="Applicant Tracking System" src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.shutterstock.com%2Fsearch%2Fjob%2Bvacancy&psig=AOvVaw0nqTEyAg_27u7WAJAcE0cA&ust=1651398874368000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCLD37bXCu_cCFQAAAAAdAAAAABAK" style="max-height:44px;max-width:262px;display:block;margin:auto;" class="CToWUd">
+                    <hr style="width:262px;margin:8px auto;border:none;border-top:1px solid #dddddd;">
+                </div>
+                <div>
+                    <div style="text-align: center;">
+                        <p>APPLY NOW!!</p>
+                    </div>
+                    <div>
+                        <h4>{job_post.job_title}</h4><span>Category: {job_post.job_category}</span><br>
+                        <h6>At {job_post.recruiter_id.company_name}, Location: {job_post.location}</h6>
+                        <p><b>{job_post.recruiter_id.company_name}</b> is offering the position of <b>{job_post.job_title}</b>. <br>
+                            The deadline to apply is <i>{job_post.application_deadline}</i> and the total number of openings are <b>{job_post.no_of_openings}</b><br>
 
-    with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
-        smtp.ehlo()
-        smtp.starttls()
-        smtp.ehlo()
-        smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
-        smtp.sendmail(EMAIL_ADDRESS, email_ids, msg)
+                        </p>
+                    </div>
+                </div>        
+            </div>
+        </div>
+
+        """
+
+        MESSAGE = MIMEMultipart('alternative')
+        MESSAGE['subject'] = SUBJECT
+        MESSAGE['To'] = RECEIVER
+        MESSAGE['From'] = EMAIL_ADDRESS
+        MESSAGE.preamble = """
+            Hello
+        """
+
+        HTML_BODY = MIMEText(BODY, 'html')
+        MESSAGE.attach(HTML_BODY)
+
+        with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
+            smtp.ehlo()
+            smtp.starttls()
+            smtp.ehlo()
+            smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+            smtp.sendmail(EMAIL_ADDRESS, [RECEIVER], MESSAGE.as_string())
 
 
 def Parse(job_description):
@@ -70,9 +110,8 @@ class JobPosts(models.Model):
                 application_deadline=application_deadline,
                 skills_required=skills_required,
             )
-            send_emails(job_post)
             job_post.save(using=self._db)
-
+            send_emails(job_post)
             return job_post
 
     recruiter_id = models.ForeignKey(RecruiterDetails, on_delete=models.CASCADE)
