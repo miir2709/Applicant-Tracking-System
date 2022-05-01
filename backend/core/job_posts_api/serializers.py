@@ -10,7 +10,7 @@ class JobPostsSerializer(serializers.ModelSerializer):
             "id",
             "recruiter_id",
             "job_title",
-            "job_description",
+            "job_description_file",
             "job_category",
             "parsed_job_description",
             "location",
@@ -34,5 +34,6 @@ class JobPostsSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         print(validated_data["job_title"])
+        print(validated_data)
         job_posts = JobPosts.job_posts_objects.create_job_post(**validated_data)
         return job_posts

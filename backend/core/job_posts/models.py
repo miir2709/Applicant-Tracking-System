@@ -87,7 +87,7 @@ class JobPosts(models.Model):
             self,
             recruiter_id,
             job_title,
-            job_description,
+            job_description_file,
             parsed_job_description,
             job_category,
             location,
@@ -98,11 +98,10 @@ class JobPosts(models.Model):
         ):
             if recruiter_id is None:
                 raise TypeError("Job Post must be associated with a Recruiter.")
-            parsed_job_description = Parse(job_description)
             job_post = self.model(
                 recruiter_id=recruiter_id,
                 job_title=job_title,
-                job_description=job_description,
+                job_description_file=job_description_file,
                 job_category=job_category,
                 parsed_job_description=parsed_job_description,
                 location=location,
@@ -111,12 +110,15 @@ class JobPosts(models.Model):
                 skills_required=skills_required,
             )
             job_post.save(using=self._db)
+            filename = 'resumes/' + job_post.job_description_file.name
+            print(filename)
+            JobPosts.job_posts_objects.filter(id=job_post.id).update(parsed_job_description=Parse(filename))
             send_emails(job_post)
             return job_post
 
     recruiter_id = models.ForeignKey(RecruiterDetails, on_delete=models.CASCADE)
     job_title = models.CharField(max_length=100)
-    job_description = models.TextField(max_length=5000)
+    job_description_file = models.FileField(upload_to ='job_description/', default='settings.MEDIA_ROOT/resumes/Resume.pdf')
     job_category = models.CharField(max_length=50, choices=JobCategory.choices, default=JobCategory.ENGG)
     parsed_job_description = models.CharField(max_length=5000, null=True, blank=True)
     location = models.CharField(max_length=200)

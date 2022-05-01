@@ -69,7 +69,11 @@ class JobDescriptionParser:
     def __init__(self, jd):
         self.matcher = Matcher(nlp.vocab)
         self.details = {"skills": None}
-        self.text = jd
+        self.jd = jd
+        self.text_raw = utils.extract_text(
+            self.jd, os.path.splitext(self.jd)[1]
+        )
+        self.text = " ".join(self.text_raw.split())
         self.nlp = nlp(self.text)
         self.nouns = list(self.nlp.noun_chunks)
         self.getDetails()

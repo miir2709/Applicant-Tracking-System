@@ -28,7 +28,8 @@ function JobPostForm(props) {
         await axios.get("http://127.0.0.1:8000/api/recruiter/user/" + localStorage.getItem('user_id')).then(async (data) => {
             var recruiter_id = (data.data.id)
             var job_title = e.target.form[0].value
-            var job_description = e.target.form[1].value
+            var job_description_file = e.target.form[1].files[0]
+            console.log(job_description_file)
             var parsed_job_description = ""
             var job_category = Job_c[e.target.form[2].value]
             var location = e.target.form[3].value
@@ -45,7 +46,7 @@ function JobPostForm(props) {
             const formData = new FormData();
             formData.append("recruiter_id", recruiter_id);
             formData.append("job_title", job_title);
-            formData.append("job_description", job_description);
+            formData.append("job_description_file", job_description_file);
             formData.append("parsed_job_description", parsed_job_description)
             formData.append("job_category", job_category)
             formData.append("location", location)
@@ -86,7 +87,7 @@ function JobPostForm(props) {
                 <form>
                     <lottie-player src="https://assets4.lottiefiles.com/datafiles/XRVoUu3IX4sGWtiC3MPpFnJvZNq7lVWDCa8LSqgS/profile.json" background="transparent" speed="1" style={{ justifyContent: 'center' }} loop autoplay></lottie-player>
                     <input type="text" id="job_title" placeholder="Job Title" />
-                    <input type="text" id="job_description" placeholder="Job Description" />
+                    <input type="file" id="job_description_file" placeholder='Upload Job Description' />
                     <select id="job_category" placeholder="Job Category" >
                         {options.map((data, index) => {
                             return (
