@@ -114,6 +114,7 @@ body {
   float: left;
   display: flex;
   flex-direction: row;
+  margin-left: 10%;
 }
 
 .nav div.main_list ul {
@@ -172,5 +173,9 @@ body {
   color: #0062cc;
 }
 
+#logoutbutton{
+  margin: auto;
+  margin-right: 10%!important;
+}
 /* Animation */
 /* Inspiration taken from Dicson https://codemyui.com/simple-hamburger-menu-x-mark-animation/ */

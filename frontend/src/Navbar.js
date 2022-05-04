@@ -12,14 +12,14 @@ function Navbar(props) {
         <nav className="nav w-screen">
             <div id="mainListDiv" class="main_list">
                 <ul class="navlinks">
-                    <li><a href={localStorage.getItem('user_id') != null ? "/profile/" + localStorage.getItem('user_id') : "/login"}><i class="fa fa-user" aria-hidden="true"></i></a></li>
+                    <li><a href={localStorage.getItem('user_id') != null ? "/profile/" + localStorage.getItem('user_id') : "/login"}><i class="fa fa-user" aria-hidden="true"></i>Login</a></li>
                     <li><a href="/">Home</a></li>
                     {localStorage.getItem('user_type') == 'Applicant' ? <li><a href="/jobs">Jobs</a></li> : null}
                     <li><a href={localStorage.getItem('user_id') == null ? "/login" : localStorage.getItem('user_type') == 'Applicant' ? "/applicant_dash" : "/recruiter_dash"}>Dashboard</a></li>
                     <li><a href="/about">About</a></li>
                 </ul>
             </div>
-            {localStorage.getItem('user_id') != null ? <button className="text-white m-auto mr-0 bg-red-700 p-2 rounded-md hover:bg-red-900" onClick={Logout}>Logout</button> : null}
+            {localStorage.getItem('user_id') != null ? <button className="text-white bg-red-700 p-2 rounded-md hover:bg-red-900" id="logoutbutton" onClick={Logout}>Logout</button> : null}
         </nav>
     )
 }
