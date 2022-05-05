@@ -12,7 +12,7 @@ function Navbar(props) {
         <nav className="nav w-screen">
             <div id="mainListDiv" class="main_list">
                 <ul class="navlinks">
-                    <li><a href={localStorage.getItem('user_id') != null ? "/profile/" + localStorage.getItem('user_id') : "/login"}><i class="fa fa-user" aria-hidden="true"></i>Login</a></li>
+                    <li><a href={localStorage.getItem('user_id') != null ? "/profile/" + localStorage.getItem('user_id') : "/login"}><i className="fa fa-user mr-3" aria-hidden="true"></i>{localStorage.getItem('user_id') == null ? "Login" : "Profile"}</a></li>
                     <li><a href="/">Home</a></li>
                     {localStorage.getItem('user_type') == 'Applicant' ? <li><a href="/jobs">Jobs</a></li> : null}
                     <li><a href={localStorage.getItem('user_id') == null ? "/login" : localStorage.getItem('user_type') == 'Applicant' ? "/applicant_dash" : "/recruiter_dash"}>Dashboard</a></li>
