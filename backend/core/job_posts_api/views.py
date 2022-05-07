@@ -7,12 +7,20 @@ from core.recruiter.models import RecruiterDetails
 from .serializers import JobPostsSerializer
 from django.shortcuts import get_object_or_404, get_list_or_404
 import json
-
+import datetime
 
 class JobPostsViewSet(viewsets.ModelViewSet):
-    queryset = JobPosts.job_posts_objects.all()
+    curr_dt = datetime.datetime.now()
+    queryset = JobPosts.job_posts_objects.all().filter(application_deadline__lte = curr_dt)
     serializer_class = JobPostsSerializer
     http_method_names = ["get", "post", "put", "delete"]
+
+class JobPostsByRViewSet(viewsets.ModelViewSet):
+    curr_dt = datetime.datetime.now()
+    queryset = JobPosts.job_posts_objects.all()
+    serializer_class = JobPostsSerializer
+    http_method_names = ["get","put","delete"]
+
 
 
 class JobPostsByRecruiterViewSet(viewsets.ModelViewSet):

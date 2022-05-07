@@ -9,6 +9,7 @@ from .job_posts_api.views import (
     JobPostsViewSet,
     JobPostsByLocationViewSet,
     JobPostsByRecruiterViewSet,
+    JobPostsByRViewSet,
     JobPostsByCompViewSet,
 )
 from .applications_api.views import (
@@ -36,6 +37,11 @@ routes.register(
     r"job_posts/user",
     JobPostsByRecruiterViewSet,
     basename="job_posts_by_recruiter",
+)
+routes.register(
+    r"job_posts/rec",
+    JobPostsByRViewSet,
+    basename="job_posts_by_rec",
 )
 routes.register(
     r"job_posts/location",

@@ -14,7 +14,7 @@ function RecruiterJobPost(props) {
     let params = useParams()
     console.log(params.id)
     useEffect(async function () {
-        await axios.get("http://127.0.0.1:8000/api/job_posts/" + params.id).then((d) => {
+        await axios.get("http://127.0.0.1:8000/api/job_posts/rec/" + params.id).then((d) => {
             setData(d['data']);
             setSkills((d['data']['skills_required']).split(','));
             setReady(true)
