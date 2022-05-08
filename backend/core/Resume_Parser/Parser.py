@@ -11,7 +11,7 @@ from nltk.corpus import stopwords
 # "c:/users/kaush/appdata/local/programs/python/python38/lib/site-packages/en_core_web_md/en_core_web_md-3.2.0"
 # "/home/ayush/Documents/Applicant-Tracking-System/env/lib/python3.8/site-packages/en_core_web_md/en_core_web_md-3.1.0"
 nlp = spacy.load(
-    "/home/ayush/Documents/Applicant-Tracking-System/env/lib/python3.8/site-packages/en_core_web_md/en_core_web_md-3.2.0"
+"c:/users/kaush/appdata/local/programs/python/python38/lib/site-packages/en_core_web_md/en_core_web_md-3.2.0"
 )
 
 

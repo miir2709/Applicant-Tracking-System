@@ -5,6 +5,7 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
+import About from './About'
 import Home from './Home'
 import Login from './Login'
 import Signup from './Signup'
@@ -47,6 +48,7 @@ function App() {
           <Route path="/create_job" element={localStorage.getItem('user_type') == 'Recruiter' && localStorage.getItem('user_id') != null ? <JobPostForm /> : null} />
           <Route path="/recruiter_app/:id" element={localStorage.getItem('user_type') == 'Recruiter' && localStorage.getItem('user_id') != null ? <RecruiterApps /> : null} />
           <Route path="/profile/:id" element={localStorage.getItem('user_id') != null ? <Profile /> : null} />sss
+          <Route path="/about" element={< About/>} />
         </Routes>
       </div>
     </Router>
