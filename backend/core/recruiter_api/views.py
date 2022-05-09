@@ -9,13 +9,13 @@ from .serializers import RecruiterSerializer
 class RecruiterViewSet(viewsets.ModelViewSet):
     queryset = RecruiterDetails.recruiter_objects.all()
     serializer_class = RecruiterSerializer
-    http_method_names = ["get", "post", "put", "delete"]
+    http_method_names = ["get", "post", "put", "delete", "patch"]
 
 
 class RecruiterByUserViewSet(viewsets.ModelViewSet):
     queryset = RecruiterDetails.recruiter_objects.all()
     serializer_class = RecruiterSerializer
-    http_method_names = ["get"]
+    http_method_names = ["get",'patch']
 
     def retrieve(self, request, *args, **kwargs):
         params = kwargs

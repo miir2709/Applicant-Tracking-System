@@ -111,7 +111,7 @@ function JobPost(props) {
                     </div>
                 </div>
                 <div className="text-xl font-bold text-left mt-5">Job Description</div>
-                <div className="mt-2"><button type="button" class="btn btn-light"><a href={data['job_description_file']} target="_blank">View Job Description</a></button></div>
+                <div className="mt-2"><button type="button" class="p-3 rounded-lg bg-blue-500 hover:bg-blue-700"><a href={data['job_description_file']} target="_blank">View Job Description</a></button></div>
                 <div className="text-xl font-bold text-left mt-5">Required Skills</div>
                 <ol className="mt-2">
                     {

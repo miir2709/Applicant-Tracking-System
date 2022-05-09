@@ -13,7 +13,7 @@ class JobPostsViewSet(viewsets.ModelViewSet):
     curr_dt = datetime.datetime.now()
     queryset = JobPosts.job_posts_objects.all().filter(application_deadline__gte = curr_dt)
     serializer_class = JobPostsSerializer
-    http_method_names = ["get", "post", "put", "delete"]
+    http_method_names = ["get", "post", "put", "delete","patch"]
 
 class JobPostsByRViewSet(viewsets.ModelViewSet):
     curr_dt = datetime.datetime.now()

@@ -14,7 +14,7 @@ class EmploymentDetailsViewSet(viewsets.ModelViewSet):
 class EmploymentDetailsByApplicantViewSet(viewsets.ModelViewSet):
     queryset = EmploymentDetails.employment_details_objects.all()
     serializer_class = EmploymentDetailsSerializer
-    http_method_names = ["get", "post", "put", "delete"]
+    http_method_names = ["get", "patch", "put"]
 
     def retrieve(self, request, *args, **kwargs):
         params = kwargs

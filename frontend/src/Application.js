@@ -46,6 +46,7 @@ function Application(props) {
                             <div className="text-md">Application Status</div>
                             <div className="text-4xl mt-2">{application_s[app['application_status']]}</div>
                         </div>
+                        <div className="mt-2"><button type="button" class="p-3 rounded-lg bg-blue-500 my-2 hover:bg-blue-700"><a href={app['job_id']['job_description_file']} target="_blank">View Job Description</a></button></div>
                         <div className="text-lg mt-3">Name: {app['applicant_id']['user_id']['first_name'] + " " + app['applicant_id']['user_id']['last_name']}</div>
                         <div className="text-lg mt-1">Application Date: {app['application_date_time'].substring(0, 10)}</div>
                         <div className="text-lg mt-1">Job Category: {Job_c[app['applicant_id']['job_categories']]}</div>

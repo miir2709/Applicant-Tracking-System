@@ -14,7 +14,7 @@ class EducationViewSet(viewsets.ModelViewSet):
 class EducationByApplicantViewSet(viewsets.ModelViewSet):
     queryset = EducationDetails.education_objects.all()
     serializer_class = EducationSerializer
-    http_method_names = ["get"]
+    http_method_names = ["get","patch"]
 
     def retrieve(self, request, *args, **kwargs):
         params = kwargs

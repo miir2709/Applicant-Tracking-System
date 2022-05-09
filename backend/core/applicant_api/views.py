@@ -9,13 +9,13 @@ from .serializers import ApplicantSerializer
 class ApplicantViewSet(viewsets.ModelViewSet):
     queryset = ApplicantDetails.applicant_objects.all()
     serializer_class = ApplicantSerializer
-    http_method_names = ["get", "post", "put", "delete"]
+    http_method_names = ["get", "post", "put", "delete", "patch"]
 
 
 class ApplicantByUserViewSet(viewsets.ModelViewSet):
     queryset = ApplicantDetails.applicant_objects.all()
     serializer_class = ApplicantSerializer
-    http_method_names = ["get"]
+    http_method_names = ["get",'patch']
 
     def retrieve(self, request, *args, **kwargs):
         params = kwargs
