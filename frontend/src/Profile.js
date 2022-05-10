@@ -66,7 +66,13 @@ function Profile() {
                                     setEduDetails(data['data'])
                                 })
                             await axios.get("http://127.0.0.1:8000/api/employment_details/applicant/" + data['data']['id'])
-                                .catch(e => console.log(e))
+                                .catch(e => {
+                                    if(e.response.status == 404){
+                                        setEmpDetails(false)
+                                        setReady(true)
+                                        return
+                                    }
+                                })
                                 .then((data) => {
                                     setEmpDetails(data['data'])
                                 })
@@ -157,25 +163,40 @@ function Profile() {
             eduFormData.append("university", uni)
             eduFormData.append("graduation_year", graduation_year)
             eduFormData.append("cgpa",cgpa)
-            const empFormData = new FormData()
-            empFormData.append("job_title", job_title)
-            empFormData.append("employer_name", emp_name)
-            empFormData.append("employment_period",emp_period)
-            empFormData.append("applicant_id", userDetails['id'])
+            if(job_title.length > 0 && emp_name.length > 0 && emp_period != null){
+                const empFormData = new FormData()
+                empFormData.append("job_title", job_title)
+                empFormData.append("employer_name", emp_name)
+                empFormData.append("employment_period",emp_period)
+                empFormData.append("applicant_id", userDetails['id'])
+                console.log(job_title, emp_period)
+                if(empDetails == false){
+                    await axios.post("http://127.0.0.1:8000/api/employment_details/", empFormData)
+                        .catch(e => {
+                            console.log(e.response)
+                        })
+                        .then(function (data) {
+                            if (data.status === 201) {
+                                window.location.reload()
+                            }
+                        })
+                }
+                else{
+                    await axios.put("http://127.0.0.1:8000/api/employment_details/applicant/" + userDetails['id'] + "/", empFormData)
+                        .catch(e => console.log(e))
+                        .then((data) => {
+                            console.log(data)
+                            window.location.reload()
+                        })
+                }
+            }
 
             await axios.patch("http://127.0.0.1:8000/api/edu/applicant/" + userDetails['id'] + "/", eduFormData)
                 .catch(e => console.log(e))
                 .then((data) => {
                     console.log(data)
                 })
-            console.log(job_title, emp_period)
-            await axios.put("http://127.0.0.1:8000/api/employment_details/applicant/" + userDetails['id'] + "/", empFormData)
-                .catch(e => console.log(e))
-                .then((data) => {
-                    console.log(data)
-                    window.location.reload()
-                })
-        }
+            }
     }
     return ready ? (
         <div className="bg-gray-200 min-h-screen">
@@ -391,35 +412,40 @@ function Profile() {
                                         <p>{eduDetails['graduation_year']}</p>
                                     </div>
                                 </div>
-                                <div className="row">
-                                    <div className="col-md-12">
-                                        <label><h1>Employment History</h1></label>
+                                {
+                                empDetails == false ? null :
+                                <div>
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <label><h1>Employment History</h1></label>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-md-6">
+                                            <label>Employer Name</label>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <p>{empDetails['employer_name']}</p>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-md-6">
+                                            <label>Job Title</label>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <p>{empDetails['job_title']}</p>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-md-6">
+                                            <label>Employment Period</label>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <p>{empDetails['employment_period']} years</p>
+                                        </div>
                                     </div>
                                 </div>
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <label>Employer Name</label>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <p>{empDetails['employer_name']}</p>
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <label>Job Title</label>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <p>{empDetails['job_title']}</p>
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <label>Employment Period</label>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <p>{empDetails['employment_period']} years</p>
-                                    </div>
-                                </div>
+                            }
                             </div>}
                         </div>
                     </div>

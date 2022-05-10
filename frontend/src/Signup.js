@@ -89,21 +89,44 @@ function Signup() {
                         loop
                         autoplay
                     ></lottie-player>
-
-                    <input type="text" placeholder="First Name" />
-                    <input type="text" placeholder="Last Name" />
-                    <input type="text" placeholder="Username" />
-                    <input type="text" placeholder="Email" />
-                    <input type="password" id="password" placeholder="Password" />
-                    <input className="mb-0" type="password" id="confirmPassword" placeholder="Confirm Password" onChange={checkPass} />
+                    <div className="flex flex-col text-left">
+                        <label for="firstName" className="mb-2 ml-1 text-sm">First Name</label>
+                        <input id="firstName" type="text" placeholder="First Name" />
+                    </div>
+                    <div className="flex flex-col text-left">
+                        <label for="lastName" className="mb-2 ml-1 text-sm">Last Name</label>
+                        <input id="lastName" type="text" placeholder="Last Name" />
+                    </div>
+                        <div className="flex flex-col text-left">
+                            <label for="username" className="mb-2 ml-1 text-sm">Username (Min. 6 characters)</label>
+                            <input id="username" type="text" placeholder="Username" />
+                    </div>
+                    <div className="flex flex-col text-left">
+                        <label for="email" className="mb-2 ml-1 text-sm">Email</label>
+                        <input id="email" type="text" placeholder="Email" />
+                    </div>
+                    <div className="flex flex-col text-left">
+                        <label for="password" className="mb-2 ml-1 text-sm">Password (Min. 8 characters)</label>
+                        <input type="password" id="password" placeholder="Password" />
+                    </div>
+                    <div className="flex flex-col text-left">
+                        <label for="confirmPassword" className="mb-2 ml-1 text-sm">Confirm Password</label>
+                        <input className="mb-0" type="password" id="confirmPassword" placeholder="Confirm Password" onChange={checkPass} />
+                    </div>
                     {passCheck === false ? <p className="text-red-600 text-sm text-left mb-2 mt-2 ml-2 font-bold">Passwords don't match</p> : null}
-                    <input className="mt-2 " type="number" placeholder="Phone" onChange={checkPhone} pattern="[0-9]{10}" />
+                    <div className="flex flex-col text-left">
+                        <label for="phone" className="mb-2 ml-1 text-sm">Phone</label>
+                        <input id="phone" className="mt-2 " type="number" placeholder="Phone" onChange={checkPhone} pattern="[0-9]{10}" />
+                    </div>
                     {phoneCheck === false ? <p className="text-red-600 text-sm text-left mb-2 -mt-2 ml-2 font-bold">Length of phone no. must be 10</p> : null}
-                    <select id="user_type" form="signup-form">
-                        <option value="Select User Type">Select User Type</option>
-                        <option value="Applicant">Applicant</option>
-                        <option value="Recruiter">Recruiter</option>
-                    </select>
+                    <div className="flex flex-col text-left">
+                        <label for="user_type" className="mb-2 ml-1 text-sm">User Type</label>
+                        <select id="user_type" form="signup-form">
+                            <option value="Select User Type">Select User Type</option>
+                            <option value="Applicant">Applicant</option>
+                            <option value="Recruiter">Recruiter</option>
+                        </select>
+                    </div>
                     <br />
                     <br />
                     <input type="submit" value="Signup" className="submit-button" onClick={createUser}></input>

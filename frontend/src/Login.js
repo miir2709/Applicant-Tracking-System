@@ -48,8 +48,14 @@ function Login() {
                 <form>
                     <lottie-player src="https://assets4.lottiefiles.com/datafiles/XRVoUu3IX4sGWtiC3MPpFnJvZNq7lVWDCa8LSqgS/profile.json" background="transparent" speed="1" style={{ justifyContent: 'center' }} loop autoplay></lottie-player>
                     {message != null ? <p className='text-red-600 font-bold mb-5'>{message}</p> : null}
-                    <input type="text" placeholder="Email" />
-                    <input type="password" id="password" placeholder="Password" />
+                    <div className="flex flex-col text-left">
+                        <label for="email" className="mb-2 ml-1 text-sm">Email</label>
+                        <input id="email" type="text" placeholder="Email" />
+                    </div>
+                    <div className="flex flex-col text-left">
+                        <label for="password" className="mb-2 ml-1 text-sm">Password</label>
+                        <input type="password" id="password" placeholder="Password" />
+                    </div>
                     <br />
                     <br />
                     <input type="submit" value="Login" className="submit-button" onClick={loginUser}></input>

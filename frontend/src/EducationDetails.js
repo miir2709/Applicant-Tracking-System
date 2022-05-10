@@ -43,16 +43,31 @@ function EducationDetails(props) {
                 <form>
                     <lottie-player src="https://assets4.lottiefiles.com/datafiles/XRVoUu3IX4sGWtiC3MPpFnJvZNq7lVWDCa8LSqgS/profile.json" background="transparent" speed="1" style={{ justifyContent: 'center' }} loop autoplay></lottie-player>
                     {message != null ? <p className='text-red-600 font-bold mb-5'>{message}</p> : null}
-                    <select id="highest_degree" type="text" placeholder="Highest Degree" >
-                        <option value="S">Select Highest Degree</option>
-                        <option value="B">Bachelors</option>
-                        <option value="M">Masters</option>
-                        <option value="P">PhD</option>
-                    </select>
-                    <input type="number" required name="cgpa" min="0" placeholder="CGPA" step=".01" />
-                    <input type="number" id="graduation_year" placeholder="Graduation Year" />
-                    <input id="university" type="text" placeholder="University Name" />
-                    <input id="field_of_study" type="text" placeholder="Field of study" />
+                    <div className="flex flex-col text-left">
+                        <label for="highest_degree" className="mb-2 ml-1 text-sm">Highest degree</label>
+                        <select id="highest_degree" type="text" placeholder="Highest Degree" >
+                            <option value="S">Select Highest Degree</option>
+                            <option value="B">Bachelors</option>
+                            <option value="M">Masters</option>
+                            <option value="P">PhD</option>
+                        </select>
+                    </div>
+                    <div className="flex flex-col text-left">
+                        <label for="cgpa" className="mb-2 ml-1 text-sm">CGPA</label>
+                        <input type="number" required name="cgpa" min="0" placeholder="CGPA" step=".01" />
+                    </div>
+                    <div className="flex flex-col text-left">
+                        <label for="graduation_year" className="mb-2 ml-1 text-sm">Graduation Year</label>
+                        <input type="number" id="graduation_year" placeholder="Graduation Year" />
+                    </div>
+                    <div className="flex flex-col text-left">
+                        <label for="university" className="mb-2 ml-1 text-sm">University</label>
+                        <input id="university" type="text" placeholder="University Name" />
+                    </div>
+                    <div className="flex flex-col text-left">
+                        <label for="field_of_study" className="mb-2 ml-1 text-sm">Field of Study</label>
+                        <input id="field_of_study" type="text" placeholder="Field of study" />
+                    </div>
                     <input type="submit" value="Submit" className="submit-button" onClick={addEducationDetails}></input>
                     <p className="message"></p>
                 </form>

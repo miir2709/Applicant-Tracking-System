@@ -48,15 +48,18 @@ function ApplicantForm(props) {
                 <form>
                     <lottie-player src="https://assets4.lottiefiles.com/datafiles/XRVoUu3IX4sGWtiC3MPpFnJvZNq7lVWDCa8LSqgS/profile.json" background="transparent" speed="1" style={{ justifyContent: 'center' }} loop autoplay></lottie-player>
                     {message != null ? <p className='text-red-600 font-bold mb-5'>{message}</p> : null}
-                    <select id="job_categories" placeholder="Job Category" >
-                        {options.map((data, index) => {
-                            return (
-                                <option value={data.toLowerCase()}>
-                                    {data}
-                                </option>
-                            )
-                        })}
-                    </select>
+                    <div className="flex flex-col text-left">
+                        <label for="job_categories" className="mb-2 ml-1 text-sm">Select preferred job category</label>
+                        <select id="job_categories" placeholder="Job Category" >
+                            {options.map((data, index) => {
+                                return (
+                                    <option value={data.toLowerCase()}>
+                                        {data}
+                                    </option>
+                                )
+                            })}
+                        </select>
+                    </div>
                     <input type="submit" value="Submit" className="submit-button" onClick={addApplicantDetails}></input>
                     <p className="message"></p>
                 </form>
