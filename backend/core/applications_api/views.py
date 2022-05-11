@@ -16,7 +16,7 @@ import smtplib
 
 def get_similarity_score(parsed_job_description, all_parsed_resumes, ids, weight, exps):
     data = pd.DataFrame({"ids": ids, "Skills": all_parsed_resumes})
-    
+
     forest = get_forest(data)
     if len(ids) == 1:
         num_reco = 1
@@ -24,8 +24,8 @@ def get_similarity_score(parsed_job_description, all_parsed_resumes, ids, weight
         num_reco = len(ids)//2
     recommendations = predict(parsed_job_description, data, 128, num_reco, forest)
     result = pd.DataFrame({"ids": ids, "Exp": exps, "tfidf_all": [0] * len(ids), "tfidf_ind": [0] * len(ids), "is_recommended": [""]*len(ids)})
-    if len(ids) > 1:
-        result['normal_exp'] = ((result['Exp'] - result['Exp'].min())/(result['Exp'].max() - result['Exp'].min()))  
+    if len(ids) > 1 and result['Exp'].max() > result['Exp'].min():
+        result['normal_exp'] = ((result['Exp'] - result['Exp'].min())/(result['Exp'].max() - result['Exp'].min()))
     else:
         result['normal_exp'] = 0
     try:
@@ -103,7 +103,7 @@ class ApplicationsViewSet(viewsets.ModelViewSet):
     queryset = ApplicationsDetails.application_objects.all()
     serializer_class = ApplicationsSerializer
     http_method_names = ["get", "post", "put", "delete", "patch"]
-    
+
     def update(self, request, *args, **kwargs):
         kwargs['partial'] = True
         obj =  super().update(request, *args, **kwargs)
