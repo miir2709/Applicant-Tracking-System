@@ -65,10 +65,15 @@ function JobPostForm(props) {
 
                 <form>
                     <lottie-player src="https://assets4.lottiefiles.com/datafiles/XRVoUu3IX4sGWtiC3MPpFnJvZNq7lVWDCa8LSqgS/profile.json" background="transparent" speed="1" style={{ justifyContent: 'center' }} loop autoplay></lottie-player>
-                    <label for="job_title" className="mb-2 ml-1 text-sm">Job Title</label>
-                    <input type="text" id="job_title" placeholder="Job Title" required/>
+                    <div className="text-left">
+                        <label for="job_title" className="mb-2 ml-1 text-sm">Job Title</label>
+                        <input type="text" id="job_title" placeholder="Job Title" required/>
+                    </div>
+                    <div className="text-left">
                     <label for="job_description_file" className="mb-2 ml-1 text-sm">Upload Job Description</label>
                     <input type="file" id="job_description_file" placeholder='Upload Job Description' required accept='.pdf, .PDF'/>
+                    </div>
+                    <div className="text-left">
                     <label for="job_category" className="mb-2 ml-1 text-sm">Job Category</label>
                     <select id="job_category" placeholder="Job Category" >
                         {options.map((data, index) => {
@@ -79,14 +84,23 @@ function JobPostForm(props) {
                             )
                         })}
                     </select>
+                    </div>
+                    <div className="text-left">
                     <label for="location" className="mb-2 ml-1 text-sm">Location</label>
                     <input type="text" id="location" placeholder="Location" required/>
+                    </div>
+                    <div className="text-left">
                     <label for="no_of_openings" className="mb-2 ml-1 text-sm">Number of Openings</label>
                     <input type="number" id="no_of_openings" placeholder="No. of openings" required/>
+                    </div>
+                    <div className="text-left">
                     <label for="application_deadline" className="mb-2 ml-1 text-sm">Application Deadline</label>
                     <input type="date" id="application_deadline" placeholder="Application Deadline" required />
+                    </div>
+                    <div className="text-left">
                     <label for="Weightage" className="mb-2 ml-1 text-sm">Years of Experience Weightage</label>
                     <input type="number" id="weightage" placeholder='Years of Experience Weightage' min="0" max="50" required/>
+                    </div>
                     <input type="submit" value="Submit" className="submit-button" onClick={addJobPostDetails}></input>
                 </form>
             </div>

@@ -49,7 +49,7 @@ function EducationDetails(props) {
                             <option value="S">Select Highest Degree</option>
                             <option value="B">Bachelors</option>
                             <option value="M">Masters</option>
-                            <option value="P">PhD</option>
+                            <option value="PHD">PhD</option>
                         </select>
                     </div>
                     <div className="flex flex-col text-left">

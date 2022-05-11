@@ -64,7 +64,7 @@ function Login() {
 
                 <form className="login-form">
                     <Link to={{ pathname: '/signup' }}>
-                        <button type="button" className='submit-button'>SIGN UP</button>
+                        <button type="button" className='submit-button'>Sign Up</button>
                     </Link>
                 </form>
             </div>

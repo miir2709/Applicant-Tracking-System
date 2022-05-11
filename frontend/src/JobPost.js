@@ -8,6 +8,7 @@ function JobPost(props) {
     const [ready, setReady] = useState(false)
     const [skills, setSkills] = useState(null)
     const [apps, setApps] = useState(false)
+    const [status, setStatus] = useState(true)
     let params = useParams()
     console.log(params.id)
     useEffect(function () {
@@ -32,6 +33,7 @@ function JobPost(props) {
     }
 
     async function submitApplication(e) {
+        setStatus(false);
         await axios.get("http://127.0.0.1:8000/api/applicant/user/" + localStorage.getItem('user_id'))
             .catch((e) => console.log(e))
             .then(async (dt) => {
@@ -55,7 +57,10 @@ function JobPost(props) {
                 formData.append("annotated_resume_filename", annotated_resume_filename)
                 formData.append("years_of_experience", years_of_experience)
                 await axios.post("http://127.0.0.1:8000/api/application/", formData)
-                    .catch((e) => console.error(e))
+                    .catch((e) => {
+                        console.error(e)
+                        window.location.reload()
+                    })
                     .then((data) => {
                         console.log(data)
                         window.location.href = "/applicant_dash"
@@ -85,13 +90,13 @@ function JobPost(props) {
                                 <div class="mt-3 text-left sm:mt-0 sm:ml-4 sm:text-left">
                                     <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Apply for Job</h3>
                                     <form>
-                                        <div className="flex flex-box">
-                                            <label for="years_of_experience" className="mb-2 ml-1 text-sm">Years of Experience</label>
-                                            <input id="years_of_experience" type='number' min="0" max="30" required /><br></br>
+                                        <div className="flex flex-col">
+                                            <label for="years_of_experience" className="my-2 ml-1 text-sm ">Years of Experience</label>
+                                            <input id="years_of_experience" type='number' min="0" max="30" className="bg-gray-100 p-2 rounded-lg" required /><br></br>
                                             <label for="application-resume" className="text-md mt-2 text-white rounded-xl p-2 bg-blue-500 hover:bg-blue-700">Upload Resume</label>
                                             <input id="application-resume" className="hidden mt-2" type="file" required accept=".pdf, .PDF"/>
                                         </div>
-                                        <button type="button" className="px-3 py-2 bg-green-500 rounded-xl ml-0 mt-2 mr-4 hover:bg-green-700" onClick={submitApplication}>Submit</button>
+                                        <button type="button" className="px-3 py-2 bg-green-500 rounded-xl ml-0 mt-2 mr-4 hover:bg-green-700" onClick={status == false ? null : submitApplication}>Submit</button>
                                     </form>
                                 </div>
                             </div>
@@ -116,16 +121,7 @@ function JobPost(props) {
                 </div>
                 <div className="text-xl font-bold text-left mt-5">Job Description</div>
                 <div className="mt-2"><button type="button" class="p-3 rounded-lg bg-blue-500 hover:bg-blue-700"><a href={data['job_description_file']} target="_blank">View Job Description</a></button></div>
-                <div className="text-xl font-bold text-left mt-5">Required Skills</div>
-                <ol className="mt-2">
-                    {
-                        skills.map((d, i) => {
-                            return (
-                                <li key={i}>{d}</li>
-                            )
-                        })
-                    }
-                </ol>
+
             </div>
             <div className="basis-2/5 flex flex-col">
                 <div className="joboverview text-left m-12 mb-5 p-8 border-2 border-gray-200">

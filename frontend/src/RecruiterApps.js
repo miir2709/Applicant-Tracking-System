@@ -16,6 +16,7 @@ function RecruiterApps() {
         await axios.get("http://127.0.0.1:8000/api/application/" + params.id)
             .catch((e) => console.log(e))
             .then(async (data) => {
+                setApp(data['data'])
                 await axios.get("http://127.0.0.1:8000/api/edu/applicant/" + data['data']['applicant_id']['id'])
                     .catch(e => console.log(e))
                     .then((data) => {
@@ -23,12 +24,19 @@ function RecruiterApps() {
                     })
 
                 await axios.get("http://127.0.0.1:8000/api/employment_details/applicant/" + data['data']['applicant_id']['id'])
-                    .catch(e => console.log(e))
+                    .catch((e) => {
+                        if(e.response.status == 404){
+                            setEmp(false)
+                            setReady(true)
+                            return
+                        }
+                    })
                     .then((data) => {
+                        console.log("error")
                         setEmp(data['data'])
                     })
 
-                setApp(data['data'])
+
                 setReady(true)
             })
     }, [])
@@ -109,9 +117,11 @@ function RecruiterApps() {
                     <div className="mt-2">{edu['university']}</div>
                     <div className="mt-2">CGPA: {edu['cgpa']}</div>
                     <div className="mt-2">Graduated: {edu['graduation_year']}</div>
-                    <div className="text-2xl font-bold mt-2">Employment</div>
-                    <div className="mt-2">{emp['job_title']} at {emp['employer_name']}</div>
-                    <div className="mt-2">Tenure: {emp['employment_period']} years</div>
+                    {emp == false ? null : <div>
+                        <div className="text-2xl font-bold mt-2">Employment</div>
+                        <div className="mt-2">{emp['job_title']} at {emp['employer_name']}</div>
+                        <div className="mt-2">Tenure: {emp['employment_period']} years</div>
+                    </div>}
                 </div>
             </div>
             <div>
