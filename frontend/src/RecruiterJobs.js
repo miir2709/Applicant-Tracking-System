@@ -121,16 +121,7 @@ function RecruiterJobPost(props) {
                     </div>
                     <div className="text-xl font-bold text-left mt-5">Job Description</div>
                     <div className="mt-2"><button type="button" class="p-3 rounded-lg bg-blue-500 mt-2 hover:bg-blue-700"><a href={data['job_description_file']} download="job_description" target="_blank">View Job Description</a></button></div>
-                    <div className="text-xl font-bold text-left mt-5">Required Skills</div>
-                    <ol className="mt-2">
-                        {
-                            skills.map((d, i) => {
-                                return (
-                                    <li key={i}>{d}</li>
-                                )
-                            })
-                        }
-                    </ol>
+                    
                 </div>
                 <div className="basis-2/5 flex flex-col">
                     <div className="joboverview text-left m-12 mb-5 p-8 border-2 border-gray-200">

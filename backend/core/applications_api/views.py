@@ -14,15 +14,20 @@ from django.http.multipartparser import MultiPartParser
 import smtplib
 
 
-def get_similarity_score(parsed_job_description, all_parsed_resumes, ids):
+def get_similarity_score(parsed_job_description, all_parsed_resumes, ids, weight, exps):
     data = pd.DataFrame({"ids": ids, "Skills": all_parsed_resumes})
+    
     forest = get_forest(data)
     if len(ids) == 1:
         num_reco = 1
     else:
         num_reco = len(ids)//2
     recommendations = predict(parsed_job_description, data, 128, num_reco, forest)
-    result = pd.DataFrame({"ids": ids, "tfidf_all": [0] * len(ids), "tfidf_ind": [0] * len(ids), "is_recommended": [""]*len(ids)})
+    result = pd.DataFrame({"ids": ids, "Exp": exps, "tfidf_all": [0] * len(ids), "tfidf_ind": [0] * len(ids), "is_recommended": [""]*len(ids)})
+    if len(ids) > 1:
+        result['normal_exp'] = ((result['Exp'] - result['Exp'].min())/(result['Exp'].max() - result['Exp'].min()))  
+    else:
+        result['normal_exp'] = 0
     try:
         for i in list(recommendations['ids'].values):
             result.loc[result['ids'] == i, 'is_recommended'] = "Recommended"
@@ -49,7 +54,9 @@ def get_similarity_score(parsed_job_description, all_parsed_resumes, ids):
     result["tfidf_ind"] = sim_ind
     result["similarity_score"] = 1 - (0.5 * result["tfidf_all"] + 0.5 * result["tfidf_ind"])
     result['similarity_score'] = 1/np.exp(result["similarity_score"])
-    return result[["ids", "similarity_score", "is_recommended"]]
+    result['final_score'] = weight*result['normal_exp'] + (1-weight)*result['similarity_score']
+    print(result)
+    return result[["ids", "final_score", "is_recommended"]]
 
 def send_emails(job_post):
     applicants = ApplicantDetails.applicant_objects.all()
@@ -130,21 +137,24 @@ class ApplicationsByJobViewSet(viewsets.ModelViewSet):
         serializer = self.serializer_class(items, many=True)
         all_parsed_resumes = []
         ids = []
+        exps = []
         if len(serializer.data) > 0:
             parsed_job_description = serializer.data[0]["job_id"][
                 "parsed_job_description"
             ]
+            weight = serializer.data[0]['job_id']['weightage']
             for data in serializer.data:
                 all_parsed_resumes.append(data["parsed_resume"])
                 ids.append(data["id"])
+                exps.append(data['years_of_experience'])
             # print(parsed_job_description, all_parsed_resumes, ids)
             similarity_scores = get_similarity_score(
-                parsed_job_description, all_parsed_resumes, ids
+                parsed_job_description, all_parsed_resumes, ids, weight/100, exps
             )
             for data in serializer.data:
                 curr_id = data["id"]
                 score = similarity_scores[similarity_scores["ids"] == curr_id][
-                    "similarity_score"
+                    "final_score"
                 ].values[0]
                 data["similarity_score"] = int(score * 100)
                 try:

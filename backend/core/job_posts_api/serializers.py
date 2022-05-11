@@ -17,6 +17,7 @@ class JobPostsSerializer(serializers.ModelSerializer):
             "no_of_openings",
             "application_deadline",
             "skills_required",
+            "weightage",
         )
         depth = 1
 

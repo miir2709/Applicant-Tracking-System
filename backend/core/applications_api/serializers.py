@@ -16,6 +16,7 @@ class ApplicationsSerializer(serializers.ModelSerializer):
             "resume",
             "parsed_resume",
             "annotated_resume_filename",
+            "years_of_experience",
         )
         depth = 2
 

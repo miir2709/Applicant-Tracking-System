@@ -94,6 +94,7 @@ class JobPosts(models.Model):
             no_of_openings,
             application_deadline,
             skills_required,
+            weightage,
             **kwargs
         ):
             if recruiter_id is None:
@@ -108,6 +109,7 @@ class JobPosts(models.Model):
                 no_of_openings=no_of_openings,
                 application_deadline=application_deadline,
                 skills_required=skills_required,
+                weightage = weightage,
             )
             job_post.save(using=self._db)
             filename = 'resumes/' + job_post.job_description_file.name
@@ -125,5 +127,6 @@ class JobPosts(models.Model):
     no_of_openings = models.IntegerField()
     application_deadline = models.DateField()
     skills_required = models.TextField(max_length=1000)
+    weightage = models.IntegerField(null=True)
     objects = models.Manager()
     job_posts_objects = JobPostsObjects()

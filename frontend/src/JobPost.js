@@ -41,10 +41,11 @@ function JobPost(props) {
                 var similarity_score = 0
                 var application_status = "AP"
                 var parsed_resume = ""
-                var resume = e.target.form[0].files[0]
+                var resume = e.target.form[1].files[0]
                 var annotated_resume_filename = ""
+                var years_of_experience = e.target.form[0].value
                 const formData = new FormData();
-                console.log(data)
+                console.log(years_of_experience)
                 formData.append("applicant_id", applicant_id)
                 formData.append("job_id", job_id)
                 formData.append("similarity_score", similarity_score)
@@ -52,6 +53,7 @@ function JobPost(props) {
                 formData.append("resume", resume)
                 formData.append("parsed_resume", parsed_resume)
                 formData.append("annotated_resume_filename", annotated_resume_filename)
+                formData.append("years_of_experience", years_of_experience)
                 await axios.post("http://127.0.0.1:8000/api/application/", formData)
                     .catch((e) => console.error(e))
                     .then((data) => {
@@ -83,9 +85,11 @@ function JobPost(props) {
                                 <div class="mt-3 text-left sm:mt-0 sm:ml-4 sm:text-left">
                                     <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Apply for Job</h3>
                                     <form>
-                                        <div className="flex flex-row">
-                                            <input id="application-resume" className="hidden mt-2" type="file" />
+                                        <div className="flex flex-box">
+                                            <label for="years_of_experience" className="mb-2 ml-1 text-sm">Years of Experience</label>
+                                            <input id="years_of_experience" type='number' min="0" max="30" required /><br></br>
                                             <label for="application-resume" className="text-md mt-2 text-white rounded-xl p-2 bg-blue-500 hover:bg-blue-700">Upload Resume</label>
+                                            <input id="application-resume" className="hidden mt-2" type="file" required accept=".pdf, .PDF"/>
                                         </div>
                                         <button type="button" className="px-3 py-2 bg-green-500 rounded-xl ml-0 mt-2 mr-4 hover:bg-green-700" onClick={submitApplication}>Submit</button>
                                     </form>

@@ -79,6 +79,7 @@ class ApplicationsDetails(models.Model):
             resume,
             parsed_resume,
             annotated_resume_filename,
+            years_of_experience,
             **kwargs
         ):
             if applicant_id is None:
@@ -94,6 +95,7 @@ class ApplicationsDetails(models.Model):
                 resume=resume,
                 parsed_resume=parsed_resume,
                 annotated_resume_filename=annotated_resume_filename,
+                years_of_experience=years_of_experience,
             )
 
             application_details.save(using=self._db)
@@ -114,6 +116,7 @@ class ApplicationsDetails(models.Model):
     resume = models.FileField(upload_to ='resumes/', default='settings.MEDIA_ROOT/resumes/Resume.pdf') # MEDIA_ROOT/resumes
     annotated_resume_filename = models.CharField(max_length=10485760, default=None, null=True) # MEDIA_ROOT/resumes
     parsed_resume = models.CharField(max_length=10485760, default=None, null=True)
+    years_of_experience = models.IntegerField(null=True)
     objects = models.Manager()
     application_objects = ApplicationsObjects()
 

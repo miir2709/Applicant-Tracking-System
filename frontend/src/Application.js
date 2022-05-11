@@ -46,7 +46,6 @@ function Application(props) {
                             <div className="text-md">Application Status</div>
                             <div className="text-4xl mt-2">{application_s[app['application_status']]}</div>
                         </div>
-                        <div className="mt-2"><button type="button" class="p-3 rounded-lg bg-blue-500 my-2 hover:bg-blue-700"><a href={app['job_id']['job_description_file']} target="_blank">View Job Description</a></button></div>
                         <div className="text-lg mt-3">Name: {app['applicant_id']['user_id']['first_name'] + " " + app['applicant_id']['user_id']['last_name']}</div>
                         <div className="text-lg mt-1">Application Date: {app['application_date_time'].substring(0, 10)}</div>
                         <div className="text-lg mt-1">Job Category: {Job_c[app['applicant_id']['job_categories']]}</div>
@@ -56,6 +55,7 @@ function Application(props) {
                         <div className="text-lg mt-2">Company: {app['job_id']['recruiter_id']['company_name']}</div>
                         <div className="text-lg mt-2">Company Website: <a className="text-blue-500 underline hover:underline hover:text-blue-700" href={app['job_id']['recruiter_id']['company_website']}>{app['job_id']['recruiter_id']['company_website']}</a></div>
                         <div className="text-lg mt-2 font-semibold">Job Description</div>
+                        <div className="mt-2"><button type="button" class="p-3 rounded-lg bg-blue-500 my-2 hover:bg-blue-700"><a href={app['job_id']['job_description_file']} target="_blank">View Job Description</a></button></div>
                         <div className="text-md mt-2">{app['job_id']['job_description']}</div>
                         <div className="text-md mt-2 font-bold">Location: </div><div>{app['job_id']['location']}</div>
                         <div className="text-md mt-2 font-bold">Vacancies: </div><div>{app['job_id']['no_of_openings']}</div>
